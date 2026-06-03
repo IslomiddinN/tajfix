@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+import { enforceRateLimit } from '@/lib/rateLimit';
+
+export const dynamic = 'force-dynamic';
 
 const suggestions = [
   {
@@ -28,6 +31,10 @@ const suggestions = [
 ];
 
 export async function POST(request: Request) {
+  // Не более 20 запросов к AI-помощнику с одного IP за минуту.
+  const limited = enforceRateLimit(request, 'ai', 20, 60_000);
+  if (limited) return limited;
+
   const body = await request.json();
   const prompt = String(body.prompt || '');
   const normalized = prompt.toLowerCase();

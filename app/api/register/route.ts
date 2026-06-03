@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
+import { enforceRateLimit } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +18,10 @@ const schema = z.object({
 });
 
 export async function POST(request: Request) {
+  // Не более 5 регистраций с одного IP за 10 минут.
+  const limited = enforceRateLimit(request, 'register', 5, 10 * 60_000);
+  if (limited) return limited;
+
   const body = await request.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) {

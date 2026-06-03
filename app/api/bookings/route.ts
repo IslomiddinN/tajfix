@@ -3,10 +3,15 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
 import { notifyTelegram, formatNewBooking } from '@/lib/notify';
+import { enforceRateLimit } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
+  // Не более 10 заявок с одного IP за минуту.
+  const limited = enforceRateLimit(request, 'bookings', 10, 60_000);
+  if (limited) return limited;
+
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {
     return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
