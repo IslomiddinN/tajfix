@@ -1,0 +1,176 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+  MASTER
+}
+
+enum CategoryType {
+  SERVICE
+  PRODUCT
+}
+
+enum OrderStatus {
+  NEW
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  phone        String    @unique
+  passwordHash String
+  role         Role      @default(USER)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  cartItems    CartItem[]
+  productOrders ProductOrder[]
+  repairBookings RepairBooking[]
+  reviews      Review[]
+  masterProfile Master?
+}
+
+model Category {
+  id        String       @id @default(cuid())
+  name      String
+  slug      String       @unique
+  type      CategoryType
+  icon      String
+  createdAt DateTime     @default(now())
+  services  Service[]    @relation("CategoryServices")
+  products  Product[]    @relation("CategoryProducts")
+}
+
+model Service {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  description     String
+  priceFrom       Int
+  category        Category  @relation(fields: [categoryId], references: [id], name: "CategoryServices")
+  categoryId      String
+  imageUrl        String
+  isUrgentAvailable Boolean @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  repairBookings  RepairBooking[]
+}
+
+model Master {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String
+  avatarUrl    String
+  specialization String
+  description  String
+  rating       Float
+  reviewsCount Int
+  distanceKm   Float
+  priceFrom    Int
+  guaranteeText String
+  isAvailable  Boolean  @default(true)
+  user         User?    @relation(fields: [userId], references: [id])
+  userId       String?  @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  bookings     RepairBooking[]
+  reviews      Review[]
+}
+
+model Product {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  description     String
+  brand           String
+  category        Category  @relation(fields: [categoryId], references: [id], name: "CategoryProducts")
+  categoryId      String
+  price           Int
+  oldPrice        Int?
+  discountPercent Int?
+  imageUrl        String
+  rating          Float
+  stock           Int
+  isHit           Boolean  @default(false)
+  isNew           Boolean  @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  cartItems       CartItem[]
+  orderItems      ProductOrderItem[]
+  reviews         Review[]
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int     @default(1)
+}
+
+model ProductOrder {
+  id          String              @id @default(cuid())
+  user        User                @relation(fields: [userId], references: [id])
+  userId      String
+  totalAmount Int
+  status      OrderStatus         @default(NEW)
+  address     String
+  phone       String
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  items       ProductOrderItem[]
+}
+
+model ProductOrderItem {
+  id        String   @id @default(cuid())
+  order     ProductOrder @relation(fields: [orderId], references: [id])
+  orderId   String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  price     Int
+}
+
+model RepairBooking {
+  id             String    @id @default(cuid())
+  user           User      @relation(fields: [userId], references: [id])
+  userId         String
+  service        Service   @relation(fields: [serviceId], references: [id])
+  serviceId      String
+  master         Master?   @relation(fields: [masterId], references: [id])
+  masterId       String?
+  problemText    String
+  address        String
+  phone          String
+  preferredDate  DateTime
+  status         OrderStatus @default(NEW)
+  estimatedPrice Int
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  master    Master?  @relation(fields: [masterId], references: [id])
+  masterId  String?
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+}
