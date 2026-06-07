@@ -44,7 +44,7 @@ export default function ContactsPage() {
         </div>
       </div>
 
-      <div className="mt-6 flex flex-col gap-3 rounded-[28px] border border-border bg-secondary p-8 text-white sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-6 flex flex-col gap-3 rounded-[28px] border border-border bg-secondary p-8 text-foreground sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-lg font-semibold">Нужен срочный ремонт?</p>
           <p className="mt-1 text-sm text-muted-foreground">Напишите нам в Telegram — ответим за пару минут.</p>

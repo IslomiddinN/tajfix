@@ -33,7 +33,7 @@ export default function CareersPage() {
       </div>
 
       {/* Стать мастером */}
-      <section className="mb-10 rounded-[32px] border border-border bg-secondary p-8 text-white">
+      <section className="mb-10 rounded-[32px] border border-border bg-secondary p-8 text-foreground">
         <div className="flex items-center gap-2 text-sm text-primary">
           <Handshake className="h-4 w-4" /> Тем, кто хочет работать с нами
         </div>

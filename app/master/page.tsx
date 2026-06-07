@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Bell, Power } from 'lucide-react';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { EmptyState } from '@/components/EmptyState';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import {
   applianceIcon,
   fmtMoney,
@@ -48,14 +49,17 @@ export default function MasterHome() {
             <p className="text-base font-semibold leading-tight">{firstName}!</p>
           </div>
         </div>
-        <Link href="/master/notifications" className="relative grid h-10 w-10 place-items-center rounded-full bg-card">
-          <Bell className="h-5 w-5" />
-          {unread > 0 && (
-            <span className="absolute -right-0.5 -top-0.5 grid h-5 w-5 place-items-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground">
-              {unread}
-            </span>
-          )}
-        </Link>
+        <div className="flex items-center gap-2">
+          <ThemeToggle className="grid h-10 w-10 place-items-center rounded-full bg-card text-muted-foreground transition hover:text-foreground" />
+          <Link href="/master/notifications" className="relative grid h-10 w-10 place-items-center rounded-full bg-card">
+            <Bell className="h-5 w-5" />
+            {unread > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 grid h-5 w-5 place-items-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground">
+                {unread}
+              </span>
+            )}
+          </Link>
+        </div>
       </div>
 
       {/* Online toggle */}

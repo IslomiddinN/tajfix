@@ -58,7 +58,7 @@ export default function OrdersPage() {
                 <div key={repair.id} className="rounded-3xl border border-border bg-secondary p-4">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <p className="font-semibold text-foreground">{repair.service.title}</p>
-                    <span className="rounded-full bg-secondary px-3 py-1 text-xs text-white">{repair.status.toLowerCase()}</span>
+                    <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">{repair.status.toLowerCase()}</span>
                   </div>
                   <p className="mt-3 text-sm text-muted-foreground">{repair.address}</p>
                   <p className="mt-2 text-sm text-muted-foreground">Предполагаемая стоимость: {repair.estimatedPrice} сом</p>
@@ -77,7 +77,7 @@ export default function OrdersPage() {
                 <div key={order.id} className="rounded-3xl border border-border bg-secondary p-4">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <p className="font-semibold text-foreground">Заказ #{order.id.slice(0, 8)}</p>
-                    <span className="rounded-full bg-secondary px-3 py-1 text-xs text-white">{order.status.toLowerCase()}</span>
+                    <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">{order.status.toLowerCase()}</span>
                   </div>
                   <p className="mt-3 text-sm text-muted-foreground">Адрес: {order.address}</p>
                   <p className="mt-2 text-sm text-muted-foreground">Сумма: {order.totalAmount} сом</p>

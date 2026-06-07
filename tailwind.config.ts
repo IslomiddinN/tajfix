@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}'
@@ -67,7 +68,7 @@ const config: Config = {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Helvetica Neue', 'Arial']
       },
       boxShadow: {
-        card: '0 25px 50px -25px rgba(0, 0, 0, 0.8)'
+        card: 'var(--shadow-card)'
       }
     }
   },

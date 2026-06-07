@@ -6,6 +6,7 @@ import { signOut } from 'next-auth/react';
 import { Bell, LogOut } from 'lucide-react';
 import { Logo } from './Logo';
 import { MASTER_TABS } from './navItems';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export function SideNav() {
   const pathname = usePathname();
@@ -43,6 +44,10 @@ export function SideNav() {
         >
           <Bell className="h-5 w-5" /> Уведомления
         </Link>
+        <ThemeToggle
+          showLabel
+          className="flex items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+        />
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
           className="flex items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium text-destructive transition hover:bg-destructive/10"
