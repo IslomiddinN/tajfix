@@ -21,19 +21,19 @@ const partnerSteps = [
 
 export default function CareersPage() {
   return (
-    <main className="container py-10">
-      <div className="mb-8">
+    <main className="container py-6 sm:py-10">
+      <div className="mb-6 sm:mb-8">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Briefcase className="h-4 w-4 text-primary" /> Карьера в TajFix
         </div>
-        <h1 className="mt-2 text-3xl font-semibold text-foreground">Работайте и зарабатывайте с нами</h1>
-        <p className="mt-2 max-w-2xl text-muted-foreground">
+        <h1 className="mt-2 text-2xl font-semibold text-foreground sm:text-3xl">Работайте и зарабатывайте с нами</h1>
+        <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
           Мы растём по всему Таджикистану и ищем мастеров, курьеров и операторов. Присоединяйтесь к команде или станьте мастером-партнёром.
         </p>
       </div>
 
       {/* Стать мастером */}
-      <section className="mb-10 rounded-[32px] border border-border bg-secondary p-8 text-foreground">
+      <section className="mb-8 rounded-[24px] border border-border bg-secondary p-6 text-foreground sm:mb-10 sm:rounded-[32px] sm:p-8">
         <div className="flex items-center gap-2 text-sm text-primary">
           <Handshake className="h-4 w-4" /> Тем, кто хочет работать с нами
         </div>

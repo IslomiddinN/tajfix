@@ -35,24 +35,24 @@ export default function MastersPage() {
   );
 
   return (
-    <main className="container py-10">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <main className="container py-6 sm:py-10">
+      <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <div>
-          <h1 className="text-3xl font-semibold text-foreground">Мастера</h1>
-          <p className="mt-2 text-muted-foreground">Выберите специалиста для ремонта вашей техники.</p>
+          <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Мастера</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground sm:mt-2 sm:text-base">Выберите специалиста для ремонта вашей техники.</p>
         </div>
-        <div className="rounded-3xl bg-secondary px-5 py-3 text-sm text-muted-foreground">
+        <div className="self-start rounded-3xl bg-secondary px-4 py-2 text-sm text-muted-foreground sm:self-auto sm:px-5 sm:py-3">
           <Star className="inline h-4 w-4 text-amber-500" /> Рейтинг и отзывы
         </div>
       </div>
-      <div className="mb-8 rounded-3xl border border-border bg-card p-5 shadow-card">
+      <div className="mb-6 rounded-3xl border border-border bg-card p-4 shadow-card sm:mb-8 sm:p-5">
         <div className="relative">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Поиск по мастеру или специализации"
-            className="w-full rounded-3xl border border-border bg-secondary py-4 pl-12 pr-4 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
+            className="w-full rounded-3xl border border-border bg-secondary py-3 pl-12 pr-4 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary sm:py-4"
           />
         </div>
       </div>

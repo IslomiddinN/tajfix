@@ -43,16 +43,16 @@ export default function OrdersPage() {
   }
 
   return (
-    <main className="container py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-foreground">Мои заказы</h1>
-        <p className="mt-2 text-muted-foreground">Статусы ремонта и покупок техники.</p>
+    <main className="container py-6 sm:py-10">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Мои заказы</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground sm:mt-2 sm:text-base">Статусы ремонта и покупок техники.</p>
       </div>
 
-      <section className="space-y-6">
+      <section className="space-y-5 sm:space-y-6">
         {repairs.length > 0 ? (
-          <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-            <h2 className="text-xl font-semibold text-foreground">Ремонтные заявки</h2>
+          <div className="rounded-[28px] border border-border bg-card p-5 shadow-card sm:rounded-[32px] sm:p-6">
+            <h2 className="text-lg font-semibold text-foreground sm:text-xl">Ремонтные заявки</h2>
             <div className="mt-5 space-y-4">
               {repairs.map((repair) => (
                 <div key={repair.id} className="rounded-3xl border border-border bg-secondary p-4">
@@ -70,8 +70,8 @@ export default function OrdersPage() {
         ) : null}
 
         {products.length > 0 ? (
-          <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-            <h2 className="text-xl font-semibold text-foreground">Покупки</h2>
+          <div className="rounded-[28px] border border-border bg-card p-5 shadow-card sm:rounded-[32px] sm:p-6">
+            <h2 className="text-lg font-semibold text-foreground sm:text-xl">Покупки</h2>
             <div className="mt-5 space-y-4">
               {products.map((order) => (
                 <div key={order.id} className="rounded-3xl border border-border bg-secondary p-4">

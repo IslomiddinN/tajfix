@@ -33,24 +33,24 @@ export default function ServicesPage() {
   );
 
   return (
-    <main className="container py-10">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <main className="container py-6 sm:py-10">
+      <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <div>
-          <h1 className="text-3xl font-semibold text-foreground">Услуги</h1>
-          <p className="mt-2 text-muted-foreground">Поиск мастера и вызов специалиста на дом.</p>
+          <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Услуги</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground sm:mt-2 sm:text-base">Поиск мастера и вызов специалиста на дом.</p>
         </div>
-        <Link href="/ai" className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+        <Link href="/ai" className="self-start rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 sm:self-auto sm:py-3">
           Воспользоваться AI
         </Link>
       </div>
-      <div className="mb-8 rounded-3xl border border-border bg-card p-5 shadow-card">
+      <div className="mb-6 rounded-3xl border border-border bg-card p-4 shadow-card sm:mb-8 sm:p-5">
         <div className="relative">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Поиск по технике или проблеме"
-            className="w-full rounded-3xl border border-border bg-secondary py-4 pl-12 pr-4 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
+            className="w-full rounded-3xl border border-border bg-secondary py-3 pl-12 pr-4 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary sm:py-4"
           />
         </div>
       </div>

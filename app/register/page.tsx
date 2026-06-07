@@ -39,12 +39,12 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="container py-10">
-      <div className="mx-auto max-w-md rounded-[32px] border border-border bg-card p-8 shadow-card">
+    <main className="container py-6 sm:py-10">
+      <div className="mx-auto max-w-md rounded-[24px] border border-border bg-card p-6 shadow-card sm:rounded-[32px] sm:p-8">
         <h1 className="text-2xl font-semibold text-foreground">Регистрация</h1>
         <p className="mt-2 text-sm text-muted-foreground">Создайте аккаунт, чтобы пользоваться сервисами.</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-5 sm:mt-8">
           <label className="block text-sm font-medium text-muted-foreground">
             Имя
             <input

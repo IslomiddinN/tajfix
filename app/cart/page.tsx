@@ -68,21 +68,21 @@ export default function CartPage() {
   }
 
   return (
-    <main className="container py-10">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <main className="container py-6 sm:py-10">
+      <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold text-foreground">Корзина</h1>
-          <p className="mt-2 text-muted-foreground">Проверьте товары перед оформлением заказа.</p>
+          <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Корзина</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground sm:mt-2 sm:text-base">Проверьте товары перед оформлением заказа.</p>
         </div>
       </div>
-      <div className="grid gap-6 lg:grid-cols-[1.5fr_0.8fr]">
-        <div className="space-y-4">
+      <div className="grid gap-5 lg:grid-cols-[1.5fr_0.8fr] sm:gap-6">
+        <div className="space-y-3 sm:space-y-4">
           {items.map((item) => (
-            <div key={item.id} className="rounded-[32px] border border-border bg-card p-5 shadow-card">
-              <div className="flex items-center gap-4">
-                <img src={item.product.imageUrl} alt={item.product.title} className="h-24 w-24 rounded-3xl object-contain" />
+            <div key={item.id} className="rounded-[28px] border border-border bg-card p-4 shadow-card sm:rounded-[32px] sm:p-5">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <img src={item.product.imageUrl} alt={item.product.title} className="h-20 w-20 rounded-2xl object-contain sm:h-24 sm:w-24 sm:rounded-3xl" />
                 <div className="flex-1">
-                  <h2 className="text-lg font-semibold text-foreground">{item.product.title}</h2>
+                  <h2 className="text-base font-semibold text-foreground sm:text-lg">{item.product.title}</h2>
                   <p className="mt-1 text-sm text-muted-foreground">{item.product.price} сом / шт.</p>
                   <div className="mt-3 flex items-center gap-3">
                     <div className="inline-flex items-center gap-3 rounded-full border border-border px-2 py-1">
@@ -121,9 +121,9 @@ export default function CartPage() {
             </div>
           ))}
         </div>
-        <div className="h-fit rounded-[32px] border border-border bg-card p-6 shadow-card">
-          <h2 className="text-xl font-semibold text-foreground">Итого</h2>
-          <p className="mt-4 text-3xl font-semibold text-foreground">{total} сом</p>
+        <div className="h-fit rounded-[28px] border border-border bg-card p-5 shadow-card sm:rounded-[32px] sm:p-6">
+          <h2 className="text-lg font-semibold text-foreground sm:text-xl">Итого</h2>
+          <p className="mt-3 text-2xl font-semibold text-foreground sm:mt-4 sm:text-3xl">{total} сом</p>
           <div className="mt-4 flex items-center gap-2 rounded-3xl bg-secondary p-4 text-sm text-muted-foreground">
             <Wallet className="h-5 w-5 text-emerald-600" /> Оплата наличными при получении
           </div>

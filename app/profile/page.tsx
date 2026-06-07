@@ -35,11 +35,11 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="container py-10">
-      <div className="mx-auto max-w-2xl space-y-6">
-        <section className="rounded-[32px] border border-border bg-card p-8 shadow-card">
-          <h1 className="text-3xl font-semibold text-foreground">Профиль</h1>
-          <div className="mt-6 space-y-4 text-muted-foreground">
+    <main className="container py-6 sm:py-10">
+      <div className="mx-auto max-w-2xl space-y-5 sm:space-y-6">
+        <section className="rounded-[28px] border border-border bg-card p-6 shadow-card sm:rounded-[32px] sm:p-8">
+          <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Профиль</h1>
+          <div className="mt-5 space-y-4 text-muted-foreground sm:mt-6">
             <div>
               <p className="text-sm text-muted-foreground">Имя</p>
               <p className="mt-1 text-lg font-semibold text-foreground">{profile?.name ?? session.user?.name}</p>
@@ -58,9 +58,9 @@ export default function ProfilePage() {
           </button>
         </section>
 
-        <section className="rounded-[32px] border border-border bg-card p-8 shadow-card">
-          <h2 className="text-2xl font-semibold text-foreground">Адреса</h2>
-          <p className="mt-3 text-muted-foreground">Добавляйте адреса в следующий релиз приложения.</p>
+        <section className="rounded-[28px] border border-border bg-card p-6 shadow-card sm:rounded-[32px] sm:p-8">
+          <h2 className="text-xl font-semibold text-foreground sm:text-2xl">Адреса</h2>
+          <p className="mt-2 text-sm text-muted-foreground sm:mt-3 sm:text-base">Добавляйте адреса в следующий релиз приложения.</p>
         </section>
       </div>
     </main>

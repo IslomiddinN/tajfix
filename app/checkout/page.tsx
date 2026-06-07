@@ -37,12 +37,12 @@ export default function CheckoutPage() {
   };
 
   return (
-    <main className="container py-10">
-      <div className="mx-auto max-w-2xl rounded-[32px] border border-border bg-card p-8 shadow-card">
-        <h1 className="text-3xl font-semibold text-foreground">Оформление заказа</h1>
-        <p className="mt-3 text-muted-foreground">Заполните данные для доставки и подтверждения.</p>
+    <main className="container py-6 sm:py-10">
+      <div className="mx-auto max-w-2xl rounded-[28px] border border-border bg-card p-6 shadow-card sm:rounded-[32px] sm:p-8">
+        <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Оформление заказа</h1>
+        <p className="mt-2 text-sm text-muted-foreground sm:mt-3 sm:text-base">Заполните данные для доставки и подтверждения.</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-5 sm:mt-8">
           <label className="block text-sm font-medium text-muted-foreground">
             Адрес доставки
             <input
@@ -59,11 +59,11 @@ export default function CheckoutPage() {
               className="mt-2 w-full rounded-3xl border border-border bg-secondary px-4 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
             />
           </label>
-          <div className="flex items-center gap-3 rounded-3xl border border-emerald-200 bg-emerald-50 p-4">
-            <Wallet className="h-5 w-5 text-emerald-600" />
+          <div className="flex items-center gap-3 rounded-3xl border border-green-500/30 bg-green-500/10 p-4">
+            <Wallet className="h-5 w-5 shrink-0 text-green-600 dark:text-green-400" />
             <div>
-              <p className="text-sm font-medium text-emerald-800">Оплата наличными при получении</p>
-              <p className="text-xs text-emerald-700">Курьер примет оплату при доставке. Онлайн-оплата будет доступна позже.</p>
+              <p className="text-sm font-medium text-green-700 dark:text-green-300">Оплата наличными при получении</p>
+              <p className="text-xs text-green-700/80 dark:text-green-300/80">Курьер примет оплату при доставке. Онлайн-оплата будет доступна позже.</p>
             </div>
           </div>
           {error ? <p className="text-sm text-red-600">{error}</p> : null}

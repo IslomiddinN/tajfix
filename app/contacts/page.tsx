@@ -7,35 +7,35 @@ export const metadata = {
 
 export default function ContactsPage() {
   return (
-    <main className="container py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-foreground">Как нас найти</h1>
-        <p className="mt-2 text-muted-foreground">Свяжитесь с нами любым удобным способом — мы на связи каждый день.</p>
+    <main className="container py-6 sm:py-10">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Как нас найти</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground sm:mt-2 sm:text-base">Свяжитесь с нами любым удобным способом — мы на связи каждый день.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <div className="flex items-start gap-4 rounded-[28px] border border-border bg-card p-6 shadow-card">
+        <div className="flex items-start gap-4 rounded-[28px] border border-border bg-card p-5 shadow-card sm:p-6">
           <MapPin className="h-6 w-6 text-brand" />
           <div>
             <p className="font-semibold text-foreground">Адрес</p>
             <p className="mt-1 text-muted-foreground">г. Душанбе, проспект Рудаки, 25</p>
           </div>
         </div>
-        <div className="flex items-start gap-4 rounded-[28px] border border-border bg-card p-6 shadow-card">
+        <div className="flex items-start gap-4 rounded-[28px] border border-border bg-card p-5 shadow-card sm:p-6">
           <Phone className="h-6 w-6 text-brand" />
           <div>
             <p className="font-semibold text-foreground">Телефон</p>
             <a href="tel:+992000000000" className="mt-1 block text-muted-foreground hover:text-foreground">+992 00 00 00 00</a>
           </div>
         </div>
-        <div className="flex items-start gap-4 rounded-[28px] border border-border bg-card p-6 shadow-card">
+        <div className="flex items-start gap-4 rounded-[28px] border border-border bg-card p-5 shadow-card sm:p-6">
           <Mail className="h-6 w-6 text-brand" />
           <div>
             <p className="font-semibold text-foreground">Email</p>
             <a href="mailto:hello@tajfix.tj" className="mt-1 block text-muted-foreground hover:text-foreground">hello@tajfix.tj</a>
           </div>
         </div>
-        <div className="flex items-start gap-4 rounded-[28px] border border-border bg-card p-6 shadow-card">
+        <div className="flex items-start gap-4 rounded-[28px] border border-border bg-card p-5 shadow-card sm:p-6">
           <Clock className="h-6 w-6 text-brand" />
           <div>
             <p className="font-semibold text-foreground">Часы работы</p>

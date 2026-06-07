@@ -30,6 +30,18 @@ async function main() {
     }
   });
 
+  const masterUser = await prisma.user.upsert({
+    where: { email: 'master@tajfix.local' },
+    update: {},
+    create: {
+      name: 'Сорбон Ҳакимов',
+      email: 'master@tajfix.local',
+      phone: '+992900000003',
+      passwordHash,
+      role: Role.MASTER
+    }
+  });
+
   const categories = await prisma.category.createMany({
     data: [
       { name: 'Стиральная машина', slug: 'washing-machine', type: CategoryType.SERVICE, icon: 'WashingMachine' },
@@ -257,18 +269,8 @@ async function main() {
     skipDuplicates: true
   });
 
-  // Link a master profile to a login account so the master dashboard is testable.
-  const masterUser = await prisma.user.upsert({
-    where: { email: 'master@tajfix.local' },
-    update: { role: Role.MASTER },
-    create: {
-      name: 'Сорбон Ҳакимов',
-      email: 'master@tajfix.local',
-      phone: '+992900111222',
-      passwordHash,
-      role: Role.MASTER
-    }
-  });
+  
+ 
 
   const masterProfile = await prisma.master.findFirst({ where: { name: 'Сорбон Ҳакимов' } });
   if (masterProfile && masterProfile.userId !== masterUser.id) {

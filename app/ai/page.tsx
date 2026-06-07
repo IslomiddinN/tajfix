@@ -28,17 +28,17 @@ export default function AIPage() {
   };
 
   return (
-    <main className="container py-10">
-      <div className="mx-auto max-w-3xl rounded-[32px] border border-border bg-card p-8 shadow-card">
-        <h1 className="text-3xl font-semibold text-foreground">TajFix AI</h1>
-        <p className="mt-3 text-muted-foreground">Попросите наше локальное AI-помощник оценить проблему техники и получить примерную стоимость ремонта.</p>
+    <main className="container py-6 sm:py-10">
+      <div className="mx-auto max-w-3xl rounded-[28px] border border-border bg-card p-6 shadow-card sm:rounded-[32px] sm:p-8">
+        <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">TajFix AI</h1>
+        <p className="mt-2 text-sm text-muted-foreground sm:mt-3 sm:text-base">Попросите наше локальное AI-помощник оценить проблему техники и получить примерную стоимость ремонта.</p>
 
-        <div className="mt-8 flex flex-col gap-4">
+        <div className="mt-6 flex flex-col gap-4 sm:mt-8">
           <input
             value={problem}
             onChange={(event) => setProblem(event.target.value)}
             placeholder="Опишите проблему техники..."
-            className="rounded-3xl border border-border bg-secondary px-5 py-4 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
+            className="rounded-3xl border border-border bg-secondary px-5 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary sm:py-4"
           />
           <div className="flex flex-wrap gap-3">
             {examples.map((example) => (

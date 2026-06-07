@@ -46,12 +46,12 @@ function BookRepairForm() {
   };
 
   return (
-    <main className="container py-10">
-      <div className="mx-auto max-w-2xl rounded-[32px] border border-border bg-card p-8 shadow-card">
-        <h1 className="text-3xl font-semibold text-foreground">Вызов мастера</h1>
-        <p className="mt-2 text-muted-foreground">Оформите заявку на ремонт техники в Душанбе.</p>
+    <main className="container py-6 sm:py-10">
+      <div className="mx-auto max-w-2xl rounded-[24px] border border-border bg-card p-6 shadow-card sm:rounded-[32px] sm:p-8">
+        <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Вызов мастера</h1>
+        <p className="mt-2 text-sm text-muted-foreground sm:text-base">Оформите заявку на ремонт техники в Душанбе.</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-5 sm:mt-8">
           <label className="block text-sm font-medium text-muted-foreground">
             Описание проблемы
             <textarea

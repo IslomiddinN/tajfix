@@ -34,20 +34,20 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <main className="container py-10">
-      <div className="mb-8 flex items-center gap-3">
-        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+    <main className="container py-6 sm:py-10">
+      <div className="mb-6 flex items-center gap-3 sm:mb-8">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-green-500/15 text-green-600 dark:text-green-400">
           <ShieldCheck className="h-6 w-6" />
         </span>
         <div>
-          <h1 className="text-3xl font-semibold text-foreground">Политика конфиденциальности</h1>
-          <p className="mt-1 text-muted-foreground">Мы бережно относимся к вашим персональным данным.</p>
+          <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Политика конфиденциальности</h1>
+          <p className="mt-1 text-sm text-muted-foreground sm:text-base">Мы бережно относимся к вашим персональным данным.</p>
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {sections.map((s) => (
-          <section key={s.title} className="rounded-[28px] border border-border bg-card p-6 shadow-card">
+          <section key={s.title} className="rounded-[24px] border border-border bg-card p-5 shadow-card sm:rounded-[28px] sm:p-6">
             <h2 className="text-lg font-semibold text-foreground">{s.title}</h2>
             <p className="mt-2 leading-7 text-muted-foreground">{s.body}</p>
           </section>

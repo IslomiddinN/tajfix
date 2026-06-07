@@ -14,21 +14,21 @@ export default async function MasterDetailPage({ params }: Params) {
   if (!master) notFound();
 
   return (
-    <main className="container py-10">
-      <div className="mb-6 flex items-center gap-3 text-muted-foreground">
+    <main className="container py-6 sm:py-10">
+      <div className="mb-5 flex items-center gap-3 text-muted-foreground sm:mb-6">
         <Link href="/masters" className="inline-flex items-center gap-2 text-sm hover:text-foreground">
           <ArrowLeft className="h-4 w-4" /> Назад к мастерам
         </Link>
       </div>
-      <section className="rounded-[32px] border border-border bg-card p-8 shadow-card">
-        <div className="grid gap-8 lg:grid-cols-[360px_1fr]">
-          <div className="rounded-3xl bg-secondary p-8 text-center">
-            <img src={master.avatarUrl} alt={master.name} className="mx-auto h-56 w-56 rounded-3xl object-cover" />
+      <section className="rounded-[24px] border border-border bg-card p-4 shadow-card sm:rounded-[32px] sm:p-8">
+        <div className="grid gap-5 lg:grid-cols-[360px_1fr] sm:gap-8">
+          <div className="rounded-3xl bg-secondary p-5 text-center sm:p-8">
+            <img src={master.avatarUrl} alt={master.name} className="mx-auto h-44 w-44 rounded-3xl object-cover sm:h-56 sm:w-56" />
           </div>
-          <div className="space-y-6">
+          <div className="space-y-5 sm:space-y-6">
             <div>
-              <p className="text-sm uppercase tracking-[0.24em] text-muted-foreground">{master.specialization}</p>
-              <h1 className="mt-3 text-3xl font-semibold text-foreground">{master.name}</h1>
+              <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground sm:text-sm">{master.specialization}</p>
+              <h1 className="mt-2 text-2xl font-semibold text-foreground sm:mt-3 sm:text-3xl">{master.name}</h1>
               <p className="mt-4 text-muted-foreground">{master.description}</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">

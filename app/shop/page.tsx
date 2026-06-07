@@ -36,19 +36,19 @@ export default function ShopPage() {
   );
 
   return (
-    <main className="container py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-foreground">Магазин техники</h1>
-        <p className="mt-2 text-muted-foreground">Выберите товар, добавьте в корзину и оформите заказ.</p>
+    <main className="container py-6 sm:py-10">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Магазин техники</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground sm:mt-2 sm:text-base">Выберите товар, добавьте в корзину и оформите заказ.</p>
       </div>
-      <div className="mb-8 rounded-3xl border border-border bg-card p-5 shadow-card">
+      <div className="mb-6 rounded-3xl border border-border bg-card p-4 shadow-card sm:mb-8 sm:p-5">
         <div className="relative">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Поиск по бренду, модели или категории"
-            className="w-full rounded-3xl border border-border bg-secondary py-4 pl-12 pr-4 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
+            className="w-full rounded-3xl border border-border bg-secondary py-3 pl-12 pr-4 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary sm:py-4"
           />
         </div>
       </div>
@@ -57,7 +57,7 @@ export default function ShopPage() {
       ) : filtered.length === 0 ? (
         <EmptyState title="Товары не найдены" description="Попробуйте изменить запрос или выберите другую категорию." />
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
           {filtered.map((product) => (
             <ProductCard key={product.id} product={product as any} />
           ))}
