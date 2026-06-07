@@ -23,8 +23,13 @@ export function Header() {
   // The master cabinet renders its own full-screen mobile shell.
   if (pathname?.startsWith('/master')) return null;
 
+  // On mobile the homepage has its own gradient hero header, so hide the global one there.
+  const isHome = pathname === '/';
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
+    <header
+      className={`sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl ${isHome ? 'max-sm:hidden' : ''}`}
+    >
       <div className="container flex h-16 items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2 font-semibold text-foreground">
           <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/30">
