@@ -25,22 +25,22 @@ export default async function HomePage() {
 
   return (
     <main className="pb-28">
-      <section className="container pt-8">
-        <div className="mb-10 relative overflow-hidden rounded-[2rem] border border-border bg-card p-8 shadow-[0_35px_80px_-40px_rgba(15,23,42,0.25)] backdrop-blur-xl sm:p-10">
+      <section className="container pt-5 sm:pt-8">
+        <div className="relative mb-6 overflow-hidden rounded-[1.75rem] border border-border bg-card p-5 shadow-[0_35px_80px_-40px_rgba(15,23,42,0.25)] backdrop-blur-xl sm:mb-10 sm:rounded-[2rem] sm:p-10">
           <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-brand/25 to-transparent blur-3xl" />
-          <div className="relative grid gap-8 lg:grid-cols-[1.5fr_auto]">
+          <div className="relative grid gap-6 lg:grid-cols-[1.5fr_auto] sm:gap-8">
             <div>
-              <span className="inline-flex rounded-full bg-primary/15 px-3 py-1 text-sm font-semibold uppercase tracking-[0.18em] text-primary backdrop-blur-xl">
+              <span className="inline-flex rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary backdrop-blur-xl sm:text-sm">
                 Classic Blue
               </span>
-              <h1 className="mt-6 max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+              <h1 className="mt-4 max-w-2xl text-[1.7rem] font-semibold leading-tight tracking-tight text-foreground sm:mt-6 sm:text-5xl">
                 Ремонт техники, покупка и помощь AI в одном месте
               </h1>
-              <p className="mt-4 max-w-2xl text-base text-muted-foreground/90 sm:text-lg">
+              <p className="mt-3 max-w-2xl text-sm text-muted-foreground/90 sm:mt-4 sm:text-lg">
                 Заказывайте мастера, выбирайте запчасти и получайте консультацию по поломкам прямо в приложении.
               </p>
 
-              <div className="mt-8 grid gap-3 sm:grid-cols-[1fr_auto]">
+              <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-[1fr_auto]">
                 <div className="flex items-center gap-3 rounded-full bg-secondary px-4 py-3 ring-1 ring-border backdrop-blur-xl">
                   <Search className="h-5 w-5 text-foreground/70" />
                   <input
@@ -54,29 +54,29 @@ export default async function HomePage() {
                 </Link>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-3 text-sm text-muted-foreground/80">
-                <span className="rounded-full bg-secondary px-3 py-2">Скорость 24/7</span>
-                <span className="rounded-full bg-secondary px-3 py-2">Гарантия на ремонт</span>
-                <span className="rounded-full bg-secondary px-3 py-2">Доставка по Душанбе</span>
+              <div className="mt-6 flex flex-wrap gap-2 text-xs text-muted-foreground/80 sm:mt-8 sm:gap-3 sm:text-sm">
+                <span className="rounded-full bg-secondary px-3 py-1.5 sm:py-2">Скорость 24/7</span>
+                <span className="rounded-full bg-secondary px-3 py-1.5 sm:py-2">Гарантия на ремонт</span>
+                <span className="rounded-full bg-secondary px-3 py-1.5 sm:py-2">Доставка по Душанбе</span>
               </div>
             </div>
 
-            <div className="grid gap-4">
-              <Link href="/services" className="card flex h-28 items-center justify-between gap-4 rounded-3xl bg-card px-5 py-5 text-foreground shadow-lg transition hover:bg-card">
+            <div className="grid gap-3 sm:gap-4">
+              <Link href="/services" className="card flex h-24 items-center justify-between gap-4 rounded-3xl bg-card px-5 py-4 text-foreground shadow-lg transition hover:bg-card sm:h-28 sm:py-5">
                 <div>
                   <p className="text-sm opacity-90">Срочный ремонт</p>
                   <h2 className="mt-2 text-xl font-semibold">Найдем мастера быстро</h2>
                 </div>
                 <ArrowRight className="h-6 w-6" />
               </Link>
-              <Link href="/shop" className="card flex h-28 items-center justify-between gap-4 rounded-3xl bg-card px-5 py-5 text-foreground shadow-lg transition hover:bg-card">
+              <Link href="/shop" className="card flex h-24 items-center justify-between gap-4 rounded-3xl bg-card px-5 py-4 text-foreground shadow-lg transition hover:bg-card sm:h-28 sm:py-5">
                 <div>
                   <p className="text-sm opacity-90">Магазин техники</p>
                   <h2 className="mt-2 text-xl font-semibold">Новинки и скидки</h2>
                 </div>
                 <ArrowRight className="h-6 w-6" />
               </Link>
-              <Link href="/ai" className="card flex h-28 items-center justify-between gap-4 rounded-3xl bg-card px-5 py-5 text-foreground shadow-lg transition hover:bg-card">
+              <Link href="/ai" className="card flex h-24 items-center justify-between gap-4 rounded-3xl bg-card px-5 py-4 text-foreground shadow-lg transition hover:bg-card sm:h-28 sm:py-5">
                 <div>
                   <p className="text-sm opacity-90">AI-помощник</p>
                   <h2 className="mt-2 text-xl font-semibold">Подберет поломку и цену</h2>
