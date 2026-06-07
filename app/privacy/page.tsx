@@ -40,16 +40,16 @@ export default function PrivacyPage() {
           <ShieldCheck className="h-6 w-6" />
         </span>
         <div>
-          <h1 className="text-3xl font-semibold text-slate-950">Политика конфиденциальности</h1>
-          <p className="mt-1 text-slate-600">Мы бережно относимся к вашим персональным данным.</p>
+          <h1 className="text-3xl font-semibold text-foreground">Политика конфиденциальности</h1>
+          <p className="mt-1 text-muted-foreground">Мы бережно относимся к вашим персональным данным.</p>
         </div>
       </div>
 
       <div className="space-y-4">
         {sections.map((s) => (
-          <section key={s.title} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-card">
-            <h2 className="text-lg font-semibold text-slate-950">{s.title}</h2>
-            <p className="mt-2 leading-7 text-slate-600">{s.body}</p>
+          <section key={s.title} className="rounded-[28px] border border-border bg-card p-6 shadow-card">
+            <h2 className="text-lg font-semibold text-foreground">{s.title}</h2>
+            <p className="mt-2 leading-7 text-muted-foreground">{s.body}</p>
           </section>
         ))}
       </div>

@@ -29,22 +29,22 @@ export default function AIPage() {
 
   return (
     <main className="container py-10">
-      <div className="mx-auto max-w-3xl rounded-[32px] border border-slate-200 bg-white p-8 shadow-card">
-        <h1 className="text-3xl font-semibold text-slate-950">TajFix AI</h1>
-        <p className="mt-3 text-slate-600">Попросите наше локальное AI-помощник оценить проблему техники и получить примерную стоимость ремонта.</p>
+      <div className="mx-auto max-w-3xl rounded-[32px] border border-border bg-card p-8 shadow-card">
+        <h1 className="text-3xl font-semibold text-foreground">TajFix AI</h1>
+        <p className="mt-3 text-muted-foreground">Попросите наше локальное AI-помощник оценить проблему техники и получить примерную стоимость ремонта.</p>
 
         <div className="mt-8 flex flex-col gap-4">
           <input
             value={problem}
             onChange={(event) => setProblem(event.target.value)}
             placeholder="Опишите проблему техники..."
-            className="rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+            className="rounded-3xl border border-border bg-secondary px-5 py-4 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
           />
           <div className="flex flex-wrap gap-3">
             {examples.map((example) => (
               <button
                 key={example}
-                className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-700 transition hover:bg-slate-100"
+                className="rounded-full border border-border bg-secondary px-4 py-2 text-sm text-muted-foreground transition hover:bg-secondary"
                 type="button"
                 onClick={() => setProblem(example)}
               >
@@ -56,24 +56,24 @@ export default function AIPage() {
             type="button"
             onClick={askAI}
             disabled={loading}
-            className="inline-flex items-center justify-center rounded-3xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center justify-center rounded-3xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? 'Анализирую...' : 'Спросить AI'}
           </button>
         </div>
 
         {result ? (
-          <div className="mt-8 rounded-3xl bg-slate-50 p-6">
-            <h2 className="text-xl font-semibold text-slate-950">Возможный диагноз</h2>
-            <p className="mt-3 text-slate-700">{result.reason}</p>
+          <div className="mt-8 rounded-3xl bg-secondary p-6">
+            <h2 className="text-xl font-semibold text-foreground">Возможный диагноз</h2>
+            <p className="mt-3 text-muted-foreground">{result.reason}</p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-3xl bg-white p-4 shadow-sm">
-                <h3 className="text-sm uppercase tracking-[0.18em] text-slate-500">Цена ремонта</h3>
-                <p className="mt-3 text-xl font-semibold text-slate-950">{result.price}</p>
+              <div className="rounded-3xl bg-card p-4 shadow-sm">
+                <h3 className="text-sm uppercase tracking-[0.18em] text-muted-foreground">Цена ремонта</h3>
+                <p className="mt-3 text-xl font-semibold text-foreground">{result.price}</p>
               </div>
-              <div className="rounded-3xl bg-white p-4 shadow-sm">
-                <h3 className="text-sm uppercase tracking-[0.18em] text-slate-500">Рекомендация</h3>
-                <p className="mt-3 text-slate-700">{result.recommendation}</p>
+              <div className="rounded-3xl bg-card p-4 shadow-sm">
+                <h3 className="text-sm uppercase tracking-[0.18em] text-muted-foreground">Рекомендация</h3>
+                <p className="mt-3 text-muted-foreground">{result.recommendation}</p>
               </div>
             </div>
           </div>

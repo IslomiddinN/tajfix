@@ -1,142 +1,204 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { CalendarClock, MapPin, Phone, Wrench } from 'lucide-react';
+import Link from 'next/link';
+import { Bell, Power } from 'lucide-react';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { EmptyState } from '@/components/EmptyState';
+import {
+  applianceIcon,
+  fmtMoney,
+  fmtTime,
+  isActive,
+  NEXT_STATUS,
+  STATUS_COLOR,
+  STATUS_LABEL,
+  useMasterStore,
+  useStats,
+  type Booking
+} from '@/lib/master/store';
 
-const STATUSES = ['NEW', 'CONFIRMED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'] as const;
-
-const STATUS_LABELS: Record<string, string> = {
-  NEW: 'Новая',
-  CONFIRMED: 'Подтверждена',
-  IN_PROGRESS: 'В работе',
-  COMPLETED: 'Завершена',
-  CANCELLED: 'Отменена'
-};
-
-interface Booking {
-  id: string;
-  service: { title: string };
-  user: { name: string; phone: string };
-  status: string;
-  problemText: string;
-  address: string;
-  phone: string;
-  estimatedPrice: number;
-  preferredDate: string;
-}
-
-export default function MasterDashboardPage() {
-  const [loading, setLoading] = useState(true);
-  const [forbidden, setForbidden] = useState(false);
-  const [masterName, setMasterName] = useState('');
-  const [bookings, setBookings] = useState<Booking[]>([]);
-  const [updatingId, setUpdatingId] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch('/api/master/bookings')
-      .then(async (res) => {
-        if (res.status === 403 || res.status === 404) {
-          setForbidden(true);
-          return null;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (!data) return;
-        setMasterName(data.master?.name ?? '');
-        setBookings(data.bookings ?? []);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  async function changeStatus(id: string, status: string) {
-    setUpdatingId(id);
-    try {
-      const res = await fetch(`/api/master/bookings/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
-      });
-      if (res.ok) {
-        setBookings((prev) => prev.map((booking) => (booking.id === id ? { ...booking, status } : booking)));
-      }
-    } finally {
-      setUpdatingId(null);
-    }
-  }
+export default function MasterHome() {
+  const { loading, forbidden, master, bookings = [], reviews = [], setBookingStatus, toggleOnline } = useMasterStore();
+  const stats = useStats(bookings, reviews);
 
   if (loading) return <LoadingSpinner />;
-
-  if (forbidden) {
-    return <EmptyState title="Нет доступа" description="Этот раздел доступен только мастерам сервиса." />;
+  if (forbidden || !master) {
+    return (
+      <div className="px-5 pt-10">
+        <EmptyState title="Нет доступа" description="Этот раздел доступен только мастерам сервиса." />
+      </div>
+    );
   }
 
+  const firstName = master.name.split(' ')[0] || master.name;
+  const news = bookings.filter((o) => o.status === 'NEW');
+  const active = bookings.filter((o) => isActive(o.status));
+  const unread = news.length;
+
   return (
-    <main className="container py-10">
-      <div className="mb-8 flex flex-col gap-2">
-        <div className="flex items-center gap-2 text-sm text-slate-500">
-          <Wrench className="h-4 w-4 text-sky-600" /> Кабинет мастера
+    <div className="px-5 pt-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-primary to-blue-700 text-base font-bold text-primary-foreground">
+            {firstName[0]}
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Привет,</p>
+            <p className="text-base font-semibold leading-tight">{firstName}!</p>
+          </div>
         </div>
-        <h1 className="text-3xl font-semibold text-slate-950">{masterName || 'Мои заявки'}</h1>
-        <p className="text-slate-600">Назначенные вам заявки на ремонт и управление их статусом.</p>
+        <Link href="/master/notifications" className="relative grid h-10 w-10 place-items-center rounded-full bg-card">
+          <Bell className="h-5 w-5" />
+          {unread > 0 && (
+            <span className="absolute -right-0.5 -top-0.5 grid h-5 w-5 place-items-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground">
+              {unread}
+            </span>
+          )}
+        </Link>
       </div>
 
-      {bookings.length === 0 ? (
-        <EmptyState title="Заявок пока нет" description="Новые заявки на ремонт появятся здесь, как только клиенты выберут вас." />
-      ) : (
-        <div className="space-y-4">
-          {bookings.map((booking) => (
-            <div key={booking.id} className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-card">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-lg font-semibold text-slate-950">{booking.service.title}</p>
-                  <p className="mt-1 text-sm text-slate-500">Клиент: {booking.user?.name ?? '—'}</p>
-                </div>
-                <span className="self-start rounded-full bg-slate-900 px-3 py-1 text-xs font-medium text-white">
-                  {STATUS_LABELS[booking.status] ?? booking.status}
-                </span>
-              </div>
-
-              <p className="mt-4 rounded-3xl bg-slate-50 p-4 text-sm text-slate-700">{booking.problemText}</p>
-
-              <div className="mt-4 grid gap-2 text-sm text-slate-600 sm:grid-cols-2">
-                <p className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-slate-400" /> {booking.address}
-                </p>
-                <p className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-slate-400" /> {booking.phone}
-                </p>
-                <p className="flex items-center gap-2">
-                  <CalendarClock className="h-4 w-4 text-slate-400" />
-                  {new Date(booking.preferredDate).toLocaleString('ru-RU', { dateStyle: 'medium', timeStyle: 'short' })}
-                </p>
-                <p className="font-medium text-slate-800">Оценка: {booking.estimatedPrice} сом</p>
-              </div>
-
-              <div className="mt-5 flex flex-wrap items-center gap-2">
-                <span className="text-sm text-slate-500">Сменить статус:</span>
-                {STATUSES.map((status) => (
-                  <button
-                    key={status}
-                    type="button"
-                    disabled={updatingId === booking.id || booking.status === status}
-                    onClick={() => changeStatus(booking.id, status)}
-                    className={`rounded-full px-4 py-1.5 text-xs font-medium transition disabled:cursor-not-allowed ${
-                      booking.status === status
-                        ? 'bg-slate-950 text-white'
-                        : 'border border-slate-200 text-slate-600 hover:bg-slate-100 disabled:opacity-50'
-                    }`}
-                  >
-                    {STATUS_LABELS[status]}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
+      {/* Online toggle */}
+      <button
+        onClick={toggleOnline}
+        className={`mt-5 flex w-full items-center justify-between rounded-3xl border p-4 transition ${
+          master.isAvailable ? 'border-green-500/40 bg-green-500/10' : 'border-border bg-card'
+        }`}
+      >
+        <div className="flex items-center gap-3">
+          <span
+            className={`grid h-11 w-11 place-items-center rounded-2xl ${
+              master.isAvailable ? 'bg-green-500/20 text-green-400' : 'bg-muted text-muted-foreground'
+            }`}
+          >
+            <Power className="h-5 w-5" />
+          </span>
+          <div className="text-left">
+            <p className="text-sm font-semibold">{master.isAvailable ? 'Вы доступны' : 'Вы оффлайн'}</p>
+            <p className="text-xs text-muted-foreground">
+              {master.isAvailable ? 'Получаете новые заказы' : 'Заказы не приходят'}
+            </p>
+          </div>
         </div>
+        <span className={`relative h-7 w-12 rounded-full ${master.isAvailable ? 'bg-green-500' : 'bg-muted'}`}>
+          <span
+            className={`absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-all ${
+              master.isAvailable ? 'left-5' : 'left-0.5'
+            }`}
+          />
+        </span>
+      </button>
+
+      {/* Stats */}
+      <div className="mt-5 grid grid-cols-4 gap-2">
+        <Stat value={stats.todayCount} label="Сегодня" />
+        <Stat value={fmtMoney(stats.earnedToday)} label="Доход" small />
+        <Stat value={stats.rating.toFixed(1) + ' ★'} label="Рейтинг" />
+        <Stat value={stats.completed} label="Всего" />
+      </div>
+
+      {/* New orders */}
+      <Section title="Новые заказы" badge={news.length}>
+        {news.length === 0 && <Empty text="Новых заказов пока нет" />}
+        {news.map((o) => (
+          <NewOrderCard key={o.id} order={o} onAccept={() => setBookingStatus(o.id, 'CONFIRMED')} onReject={() => setBookingStatus(o.id, 'CANCELLED')} />
+        ))}
+      </Section>
+
+      <Section title="В работе" badge={active.length}>
+        {active.length === 0 && <Empty text="Нет активных заказов" />}
+        {active.map((o) => (
+          <ActiveOrderCard key={o.id} order={o} onNext={(next) => setBookingStatus(o.id, next)} />
+        ))}
+      </Section>
+    </div>
+  );
+}
+
+function Stat({ value, label, small }: { value: React.ReactNode; label: string; small?: boolean }) {
+  return (
+    <div className="rounded-2xl bg-card p-3">
+      <p className={`font-bold ${small ? 'text-sm' : 'text-lg'}`}>{value}</p>
+      <p className="mt-0.5 text-[10px] text-muted-foreground">{label}</p>
+    </div>
+  );
+}
+
+function Section({ title, badge, children }: { title: string; badge?: number; children: React.ReactNode }) {
+  return (
+    <section className="mt-6">
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="text-base font-bold">{title}</h2>
+        {typeof badge === 'number' && (
+          <span className="rounded-full bg-card px-2 py-0.5 text-xs text-muted-foreground">{badge}</span>
+        )}
+      </div>
+      <div className="space-y-3">{children}</div>
+    </section>
+  );
+}
+
+function Empty({ text }: { text: string }) {
+  return (
+    <div className="rounded-2xl border border-dashed border-border bg-card/40 p-5 text-center text-sm text-muted-foreground">
+      {text}
+    </div>
+  );
+}
+
+function NewOrderCard({ order, onAccept, onReject }: { order: Booking; onAccept: () => void; onReject: () => void }) {
+  return (
+    <div className="pulse-new fade-up rounded-3xl border border-orange-500/30 bg-card p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-orange-500/15 text-xl">{applianceIcon(order.service.title)}</span>
+          <div>
+            <p className="text-sm font-semibold leading-tight">{order.service.title}</p>
+            <p className="text-xs text-muted-foreground">{order.address}</p>
+          </div>
+        </div>
+        <span className="text-sm font-bold text-primary">{fmtMoney(order.estimatedPrice)}</span>
+      </div>
+      <p className="mt-2 text-xs text-muted-foreground">⏱ {fmtTime(order.createdAt)}</p>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <button onClick={onAccept} className="h-10 rounded-xl bg-green-500 font-semibold text-white">
+          Принять
+        </button>
+        <button onClick={onReject} className="h-10 rounded-xl bg-destructive/15 font-semibold text-destructive">
+          Отклонить
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ActiveOrderCard({ order, onNext }: { order: Booking; onNext: (next: Booking['status']) => void }) {
+  const next = NEXT_STATUS[order.status];
+  return (
+    <Link href={`/master/orders/${order.id}`} className="block fade-up rounded-3xl border border-border bg-card p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-primary/10 text-xl">{applianceIcon(order.service.title)}</span>
+          <div>
+            <p className="text-sm font-semibold leading-tight">{order.service.title}</p>
+            <p className="text-xs text-muted-foreground">{order.user.name ?? 'Клиент'}</p>
+          </div>
+        </div>
+        <span className={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${STATUS_COLOR[order.status]}`}>
+          {STATUS_LABEL[order.status]}
+        </span>
+      </div>
+      {next && (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            onNext(next.next);
+          }}
+          className="mt-3 h-10 w-full rounded-xl bg-primary font-semibold text-primary-foreground"
+        >
+          {next.label}
+        </button>
       )}
-    </main>
+    </Link>
   );
 }

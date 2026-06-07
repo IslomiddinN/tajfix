@@ -71,37 +71,37 @@ export default function CartPage() {
     <main className="container py-10">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold text-slate-950">Корзина</h1>
-          <p className="mt-2 text-slate-600">Проверьте товары перед оформлением заказа.</p>
+          <h1 className="text-3xl font-semibold text-foreground">Корзина</h1>
+          <p className="mt-2 text-muted-foreground">Проверьте товары перед оформлением заказа.</p>
         </div>
       </div>
       <div className="grid gap-6 lg:grid-cols-[1.5fr_0.8fr]">
         <div className="space-y-4">
           {items.map((item) => (
-            <div key={item.id} className="rounded-[32px] border border-slate-200 bg-white p-5 shadow-card">
+            <div key={item.id} className="rounded-[32px] border border-border bg-card p-5 shadow-card">
               <div className="flex items-center gap-4">
                 <img src={item.product.imageUrl} alt={item.product.title} className="h-24 w-24 rounded-3xl object-contain" />
                 <div className="flex-1">
-                  <h2 className="text-lg font-semibold text-slate-950">{item.product.title}</h2>
-                  <p className="mt-1 text-sm text-slate-500">{item.product.price} сом / шт.</p>
+                  <h2 className="text-lg font-semibold text-foreground">{item.product.title}</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">{item.product.price} сом / шт.</p>
                   <div className="mt-3 flex items-center gap-3">
-                    <div className="inline-flex items-center gap-3 rounded-full border border-slate-200 px-2 py-1">
+                    <div className="inline-flex items-center gap-3 rounded-full border border-border px-2 py-1">
                       <button
                         type="button"
                         aria-label="Уменьшить"
                         disabled={busyId === item.id || item.quantity <= 1}
                         onClick={() => changeQuantity(item, -1)}
-                        className="flex h-7 w-7 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 disabled:opacity-40"
+                        className="flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground transition hover:bg-secondary disabled:opacity-40"
                       >
                         <Minus className="h-4 w-4" />
                       </button>
-                      <span className="min-w-[1.5rem] text-center text-sm font-medium text-slate-900">{item.quantity}</span>
+                      <span className="min-w-[1.5rem] text-center text-sm font-medium text-foreground">{item.quantity}</span>
                       <button
                         type="button"
                         aria-label="Увеличить"
                         disabled={busyId === item.id}
                         onClick={() => changeQuantity(item, 1)}
-                        className="flex h-7 w-7 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 disabled:opacity-40"
+                        className="flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground transition hover:bg-secondary disabled:opacity-40"
                       >
                         <Plus className="h-4 w-4" />
                       </button>
@@ -116,18 +116,18 @@ export default function CartPage() {
                     </button>
                   </div>
                 </div>
-                <p className="self-start text-lg font-semibold text-slate-950">{item.product.price * item.quantity} сом</p>
+                <p className="self-start text-lg font-semibold text-foreground">{item.product.price * item.quantity} сом</p>
               </div>
             </div>
           ))}
         </div>
-        <div className="h-fit rounded-[32px] border border-slate-200 bg-white p-6 shadow-card">
-          <h2 className="text-xl font-semibold text-slate-950">Итого</h2>
-          <p className="mt-4 text-3xl font-semibold text-slate-950">{total} сом</p>
-          <div className="mt-4 flex items-center gap-2 rounded-3xl bg-slate-50 p-4 text-sm text-slate-600">
+        <div className="h-fit rounded-[32px] border border-border bg-card p-6 shadow-card">
+          <h2 className="text-xl font-semibold text-foreground">Итого</h2>
+          <p className="mt-4 text-3xl font-semibold text-foreground">{total} сом</p>
+          <div className="mt-4 flex items-center gap-2 rounded-3xl bg-secondary p-4 text-sm text-muted-foreground">
             <Wallet className="h-5 w-5 text-emerald-600" /> Оплата наличными при получении
           </div>
-          <Link href="/checkout" className="mt-6 inline-flex w-full items-center justify-center rounded-3xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
+          <Link href="/checkout" className="mt-6 inline-flex w-full items-center justify-center rounded-3xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
             Оформить заказ
           </Link>
         </div>

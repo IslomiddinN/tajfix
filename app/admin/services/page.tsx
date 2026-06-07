@@ -107,69 +107,69 @@ export default function AdminServicesPage() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-semibold text-slate-950">Услуги</h1>
-          <p className="mt-2 text-slate-600">Управление услугами ремонта.</p>
+          <h1 className="text-3xl font-semibold text-foreground">Услуги</h1>
+          <p className="mt-2 text-muted-foreground">Управление услугами ремонта.</p>
         </div>
-        <button onClick={openCreate} className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">
+        <button onClick={openCreate} className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
           <Plus className="h-4 w-4" /> Добавить
         </button>
       </div>
 
       {form ? (
-        <div className="mb-6 rounded-[28px] border border-slate-200 bg-white p-6 shadow-card">
+        <div className="mb-6 rounded-[28px] border border-border bg-card p-6 shadow-card">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-slate-950">{editingId ? 'Редактирование услуги' : 'Новая услуга'}</h2>
-            <button onClick={() => setForm(null)} className="rounded-full p-2 text-slate-500 hover:bg-slate-100"><X className="h-5 w-5" /></button>
+            <h2 className="text-xl font-semibold text-foreground">{editingId ? 'Редактирование услуги' : 'Новая услуга'}</h2>
+            <button onClick={() => setForm(null)} className="rounded-full p-2 text-muted-foreground hover:bg-secondary"><X className="h-5 w-5" /></button>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <label className="text-sm text-slate-600">Название<input className="adminput" {...field('title')} /></label>
-            <label className="text-sm text-slate-600">Категория
+            <label className="text-sm text-muted-foreground">Название<input className="adminput" {...field('title')} /></label>
+            <label className="text-sm text-muted-foreground">Категория
               <select className="adminput" {...field('categoryId')}>
                 {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             </label>
-            <label className="text-sm text-slate-600">Цена от (сом)<input type="number" className="adminput" {...field('priceFrom')} /></label>
-            <label className="text-sm text-slate-600 sm:col-span-2">Ссылка на фото<input className="adminput" {...field('imageUrl')} /></label>
-            <label className="text-sm text-slate-600 sm:col-span-2">Описание<textarea className="adminput" rows={3} {...field('description')} /></label>
-            <label className="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" checked={form.isUrgentAvailable} onChange={(e) => setForm((f: any) => ({ ...f, isUrgentAvailable: e.target.checked }))} /> Срочный выезд доступен</label>
+            <label className="text-sm text-muted-foreground">Цена от (сом)<input type="number" className="adminput" {...field('priceFrom')} /></label>
+            <label className="text-sm text-muted-foreground sm:col-span-2">Ссылка на фото<input className="adminput" {...field('imageUrl')} /></label>
+            <label className="text-sm text-muted-foreground sm:col-span-2">Описание<textarea className="adminput" rows={3} {...field('description')} /></label>
+            <label className="flex items-center gap-2 text-sm text-muted-foreground"><input type="checkbox" checked={form.isUrgentAvailable} onChange={(e) => setForm((f: any) => ({ ...f, isUrgentAvailable: e.target.checked }))} /> Срочный выезд доступен</label>
           </div>
           {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
           <div className="mt-5 flex gap-3">
-            <button disabled={saving} onClick={save} className="rounded-full bg-slate-950 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:opacity-60">{saving ? 'Сохранение…' : 'Сохранить'}</button>
-            <button onClick={() => setForm(null)} className="rounded-full border border-slate-200 px-6 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100">Отмена</button>
+            <button disabled={saving} onClick={save} className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60">{saving ? 'Сохранение…' : 'Сохранить'}</button>
+            <button onClick={() => setForm(null)} className="rounded-full border border-border px-6 py-2.5 text-sm font-medium text-muted-foreground hover:bg-secondary">Отмена</button>
           </div>
         </div>
       ) : null}
 
-      <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-card">
+      <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-card">
         <table className="w-full text-left text-sm">
-          <thead className="bg-slate-50 text-slate-500">
+          <thead className="bg-secondary text-muted-foreground">
             <tr>
               <th className="px-5 py-3 font-medium">Услуга</th>
               <th className="px-5 py-3 font-medium">Цена от</th>
               <th className="px-5 py-3 text-right font-medium">Действия</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-border">
             {services.map((s) => (
               <tr key={s.id}>
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-3">
                     <img src={s.imageUrl} alt={s.title} className="h-12 w-12 rounded-xl object-cover" />
-                    <p className="font-medium text-slate-900">{s.title}</p>
+                    <p className="font-medium text-foreground">{s.title}</p>
                   </div>
                 </td>
-                <td className="px-5 py-3 text-slate-700">{s.priceFrom} сом</td>
+                <td className="px-5 py-3 text-muted-foreground">{s.priceFrom} сом</td>
                 <td className="px-5 py-3">
                   <div className="flex justify-end gap-2">
-                    <button onClick={() => openEdit(s)} className="rounded-full border border-slate-200 p-2 text-slate-600 hover:bg-slate-100"><Pencil className="h-4 w-4" /></button>
-                    <button onClick={() => remove(s.id)} className="rounded-full border border-slate-200 p-2 text-red-600 hover:bg-red-50"><Trash2 className="h-4 w-4" /></button>
+                    <button onClick={() => openEdit(s)} className="rounded-full border border-border p-2 text-muted-foreground hover:bg-secondary"><Pencil className="h-4 w-4" /></button>
+                    <button onClick={() => remove(s.id)} className="rounded-full border border-border p-2 text-red-600 hover:bg-red-50"><Trash2 className="h-4 w-4" /></button>
                   </div>
                 </td>
               </tr>
             ))}
             {services.length === 0 ? (
-              <tr><td colSpan={3} className="px-5 py-8 text-center text-slate-500">Услуг пока нет</td></tr>
+              <tr><td colSpan={3} className="px-5 py-8 text-center text-muted-foreground">Услуг пока нет</td></tr>
             ) : null}
           </tbody>
         </table>

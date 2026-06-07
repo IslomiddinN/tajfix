@@ -77,7 +77,7 @@ export default function AdminOrdersPage() {
       value={status}
       disabled={busy === id}
       onChange={(e) => setStatus(id, e.target.value, type)}
-      className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 outline-none focus:border-sky-500"
+      className="rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground outline-none focus:border-primary"
     >
       {STATUSES.map((s) => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
     </select>
@@ -86,45 +86,45 @@ export default function AdminOrdersPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold text-slate-950">Заказы и заявки</h1>
-        <p className="mt-2 text-slate-600">Меняйте статусы заказов магазина и ремонтных заявок.</p>
+        <h1 className="text-3xl font-semibold text-foreground">Заказы и заявки</h1>
+        <p className="mt-2 text-muted-foreground">Меняйте статусы заказов магазина и ремонтных заявок.</p>
       </div>
 
       <section>
-        <h2 className="mb-4 text-xl font-semibold text-slate-950">Заказы магазина ({orders.length})</h2>
+        <h2 className="mb-4 text-xl font-semibold text-foreground">Заказы магазина ({orders.length})</h2>
         <div className="space-y-3">
           {orders.map((o) => (
-            <div key={o.id} className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-card">
+            <div key={o.id} className="rounded-[28px] border border-border bg-card p-5 shadow-card">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="font-semibold text-slate-900">Заказ #{o.id.slice(0, 8)} · {o.totalAmount} сом</p>
-                  <p className="mt-1 text-sm text-slate-500">{o.user?.name} · {o.user?.phone} · {o.address}</p>
-                  <p className="mt-1 text-xs text-slate-400">{o.items.map((i) => `${i.product.title} ×${i.quantity}`).join(', ')}</p>
+                  <p className="font-semibold text-foreground">Заказ #{o.id.slice(0, 8)} · {o.totalAmount} сом</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{o.user?.name} · {o.user?.phone} · {o.address}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{o.items.map((i) => `${i.product.title} ×${i.quantity}`).join(', ')}</p>
                 </div>
                 {statusSelect(o.id, o.status, 'order')}
               </div>
             </div>
           ))}
-          {orders.length === 0 ? <p className="text-sm text-slate-500">Заказов пока нет</p> : null}
+          {orders.length === 0 ? <p className="text-sm text-muted-foreground">Заказов пока нет</p> : null}
         </div>
       </section>
 
       <section>
-        <h2 className="mb-4 text-xl font-semibold text-slate-950">Ремонтные заявки ({bookings.length})</h2>
+        <h2 className="mb-4 text-xl font-semibold text-foreground">Ремонтные заявки ({bookings.length})</h2>
         <div className="space-y-3">
           {bookings.map((b) => (
-            <div key={b.id} className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-card">
+            <div key={b.id} className="rounded-[28px] border border-border bg-card p-5 shadow-card">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="font-semibold text-slate-900">{b.service.title} · {b.estimatedPrice} сом</p>
-                  <p className="mt-1 text-sm text-slate-500">{b.user?.name} · {b.address}{b.master ? ` · мастер: ${b.master.name}` : ''}</p>
-                  <p className="mt-1 text-xs text-slate-400">{b.problemText}</p>
+                  <p className="font-semibold text-foreground">{b.service.title} · {b.estimatedPrice} сом</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{b.user?.name} · {b.address}{b.master ? ` · мастер: ${b.master.name}` : ''}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{b.problemText}</p>
                 </div>
                 {statusSelect(b.id, b.status, 'booking')}
               </div>
             </div>
           ))}
-          {bookings.length === 0 ? <p className="text-sm text-slate-500">Заявок пока нет</p> : null}
+          {bookings.length === 0 ? <p className="text-sm text-muted-foreground">Заявок пока нет</p> : null}
         </div>
       </section>
     </div>

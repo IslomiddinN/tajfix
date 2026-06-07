@@ -38,17 +38,17 @@ export default function ShopPage() {
   return (
     <main className="container py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-slate-950">Магазин техники</h1>
-        <p className="mt-2 text-slate-600">Выберите товар, добавьте в корзину и оформите заказ.</p>
+        <h1 className="text-3xl font-semibold text-foreground">Магазин техники</h1>
+        <p className="mt-2 text-muted-foreground">Выберите товар, добавьте в корзину и оформите заказ.</p>
       </div>
-      <div className="mb-8 rounded-3xl border border-slate-200 bg-white p-5 shadow-card">
+      <div className="mb-8 rounded-3xl border border-border bg-card p-5 shadow-card">
         <div className="relative">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Поиск по бренду, модели или категории"
-            className="w-full rounded-3xl border border-slate-200 bg-slate-50 py-4 pl-12 pr-4 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+            className="w-full rounded-3xl border border-border bg-secondary py-4 pl-12 pr-4 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
           />
         </div>
       </div>

@@ -38,35 +38,35 @@ export default function LoginPage() {
 
   return (
     <main className="container py-10">
-      <div className="mx-auto max-w-md rounded-[32px] border border-slate-200 bg-white p-8 shadow-card">
-        <h1 className="text-2xl font-semibold text-slate-950">Вход в TajFix</h1>
-        <p className="mt-2 text-sm text-slate-600">Используйте email и пароль для доступа к сервисам.</p>
+      <div className="mx-auto max-w-md rounded-[32px] border border-border bg-card p-8 shadow-card">
+        <h1 className="text-2xl font-semibold text-foreground">Вход в TajFix</h1>
+        <p className="mt-2 text-sm text-muted-foreground">Используйте email и пароль для доступа к сервисам.</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
-          <label className="block text-sm font-medium text-slate-700">
+          <label className="block text-sm font-medium text-muted-foreground">
             Email
             <input
               type="email"
               {...register('email')}
-              className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              className="mt-2 w-full rounded-3xl border border-border bg-secondary px-4 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
             />
           </label>
-          <label className="block text-sm font-medium text-slate-700">
+          <label className="block text-sm font-medium text-muted-foreground">
             Пароль
             <input
               type="password"
               {...register('password')}
-              className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              className="mt-2 w-full rounded-3xl border border-border bg-secondary px-4 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
             />
           </label>
           {error ? <p className="text-sm text-red-600">{error}</p> : null}
-          <button className="w-full rounded-3xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800" type="submit">
+          <button className="w-full rounded-3xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90" type="submit">
             Войти
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
-          Нет аккаунта? <Link href="/register" className="font-semibold text-sky-600">Зарегистрироваться</Link>
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          Нет аккаунта? <Link href="/register" className="font-semibold text-primary">Зарегистрироваться</Link>
         </p>
       </div>
     </main>

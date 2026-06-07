@@ -12,6 +12,28 @@ function num(value: unknown, fallback: number) {
   return value != null && value !== '' ? Number(value) : fallback;
 }
 
+export async function GET(_request: Request, { params }: Params) {
+  if (!(await requireAdmin())) {
+    return NextResponse.json({ message: 'Нет доступа' }, { status: 403 });
+  }
+  const master = await prisma.master.findUnique({
+    where: { id: params.id },
+    include: {
+      bookings: {
+        include: { service: { select: { title: true } }, user: { select: { name: true, phone: true } } },
+        orderBy: { preferredDate: 'desc' }
+      },
+      reviews: {
+        include: { user: { select: { name: true } } },
+        orderBy: { createdAt: 'desc' }
+      },
+      user: { select: { email: true } }
+    }
+  });
+  if (!master) return NextResponse.json({ message: 'Мастер не найден' }, { status: 404 });
+  return NextResponse.json(master);
+}
+
 export async function PATCH(request: Request, { params }: Params) {
   if (!(await requireAdmin())) {
     return NextResponse.json({ message: 'Нет доступа' }, { status: 403 });

@@ -40,52 +40,52 @@ export default function RegisterPage() {
 
   return (
     <main className="container py-10">
-      <div className="mx-auto max-w-md rounded-[32px] border border-slate-200 bg-white p-8 shadow-card">
-        <h1 className="text-2xl font-semibold text-slate-950">Регистрация</h1>
-        <p className="mt-2 text-sm text-slate-600">Создайте аккаунт, чтобы пользоваться сервисами.</p>
+      <div className="mx-auto max-w-md rounded-[32px] border border-border bg-card p-8 shadow-card">
+        <h1 className="text-2xl font-semibold text-foreground">Регистрация</h1>
+        <p className="mt-2 text-sm text-muted-foreground">Создайте аккаунт, чтобы пользоваться сервисами.</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
-          <label className="block text-sm font-medium text-slate-700">
+          <label className="block text-sm font-medium text-muted-foreground">
             Имя
             <input
               type="text"
               {...register('name')}
-              className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              className="mt-2 w-full rounded-3xl border border-border bg-secondary px-4 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
             />
           </label>
-          <label className="block text-sm font-medium text-slate-700">
+          <label className="block text-sm font-medium text-muted-foreground">
             Email
             <input
               type="email"
               {...register('email')}
-              className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              className="mt-2 w-full rounded-3xl border border-border bg-secondary px-4 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
             />
           </label>
-          <label className="block text-sm font-medium text-slate-700">
+          <label className="block text-sm font-medium text-muted-foreground">
             Телефон
             <input
               type="tel"
               {...register('phone')}
-              className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              className="mt-2 w-full rounded-3xl border border-border bg-secondary px-4 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
             />
           </label>
-          <label className="block text-sm font-medium text-slate-700">
+          <label className="block text-sm font-medium text-muted-foreground">
             Пароль
             <input
               type="password"
               {...register('password')}
-              className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              className="mt-2 w-full rounded-3xl border border-border bg-secondary px-4 py-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
             />
           </label>
           {error ? <p className="text-sm text-red-600">{error}</p> : null}
-          {message ? <p className="text-sm text-slate-600">{message}</p> : null}
-          <button className="w-full rounded-3xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800" type="submit">
+          {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
+          <button className="w-full rounded-3xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90" type="submit">
             Зарегистрироваться
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
-          Уже есть аккаунт? <Link href="/login" className="font-semibold text-sky-600">Войти</Link>
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          Уже есть аккаунт? <Link href="/login" className="font-semibold text-primary">Войти</Link>
         </p>
       </div>
     </main>

@@ -30,9 +30,14 @@ export async function PATCH(request: Request, { params }: Params) {
   if (!booking || booking.masterId !== master.id) {
     return NextResponse.json({ message: 'Заявка не найдена' }, { status: 404 });
   }
+  const data: { status: OrderStatus; estimatedPrice?: number } = { status };
+  // On completion the master can record the final invoice amount.
+  if (status === 'COMPLETED' && typeof body.finalPrice === 'number' && body.finalPrice > 0) {
+    data.estimatedPrice = Math.round(body.finalPrice);
+  }
   const updated = await prisma.repairBooking.update({
     where: { id: params.id },
-    data: { status }
+    data
   });
   return NextResponse.json(updated);
 }

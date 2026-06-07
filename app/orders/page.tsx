@@ -45,24 +45,24 @@ export default function OrdersPage() {
   return (
     <main className="container py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-slate-950">Мои заказы</h1>
-        <p className="mt-2 text-slate-600">Статусы ремонта и покупок техники.</p>
+        <h1 className="text-3xl font-semibold text-foreground">Мои заказы</h1>
+        <p className="mt-2 text-muted-foreground">Статусы ремонта и покупок техники.</p>
       </div>
 
       <section className="space-y-6">
         {repairs.length > 0 ? (
-          <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-card">
-            <h2 className="text-xl font-semibold text-slate-950">Ремонтные заявки</h2>
+          <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
+            <h2 className="text-xl font-semibold text-foreground">Ремонтные заявки</h2>
             <div className="mt-5 space-y-4">
               {repairs.map((repair) => (
-                <div key={repair.id} className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                <div key={repair.id} className="rounded-3xl border border-border bg-secondary p-4">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="font-semibold text-slate-950">{repair.service.title}</p>
-                    <span className="rounded-full bg-slate-900 px-3 py-1 text-xs text-white">{repair.status.toLowerCase()}</span>
+                    <p className="font-semibold text-foreground">{repair.service.title}</p>
+                    <span className="rounded-full bg-secondary px-3 py-1 text-xs text-white">{repair.status.toLowerCase()}</span>
                   </div>
-                  <p className="mt-3 text-sm text-slate-600">{repair.address}</p>
-                  <p className="mt-2 text-sm text-slate-700">Предполагаемая стоимость: {repair.estimatedPrice} сом</p>
-                  <p className="mt-1 text-sm text-slate-500">Дата: {new Date(repair.preferredDate).toLocaleDateString('ru-RU')}</p>
+                  <p className="mt-3 text-sm text-muted-foreground">{repair.address}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Предполагаемая стоимость: {repair.estimatedPrice} сом</p>
+                  <p className="mt-1 text-sm text-muted-foreground">Дата: {new Date(repair.preferredDate).toLocaleDateString('ru-RU')}</p>
                 </div>
               ))}
             </div>
@@ -70,18 +70,18 @@ export default function OrdersPage() {
         ) : null}
 
         {products.length > 0 ? (
-          <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-card">
-            <h2 className="text-xl font-semibold text-slate-950">Покупки</h2>
+          <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
+            <h2 className="text-xl font-semibold text-foreground">Покупки</h2>
             <div className="mt-5 space-y-4">
               {products.map((order) => (
-                <div key={order.id} className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                <div key={order.id} className="rounded-3xl border border-border bg-secondary p-4">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="font-semibold text-slate-950">Заказ #{order.id.slice(0, 8)}</p>
-                    <span className="rounded-full bg-slate-900 px-3 py-1 text-xs text-white">{order.status.toLowerCase()}</span>
+                    <p className="font-semibold text-foreground">Заказ #{order.id.slice(0, 8)}</p>
+                    <span className="rounded-full bg-secondary px-3 py-1 text-xs text-white">{order.status.toLowerCase()}</span>
                   </div>
-                  <p className="mt-3 text-sm text-slate-600">Адрес: {order.address}</p>
-                  <p className="mt-2 text-sm text-slate-700">Сумма: {order.totalAmount} сом</p>
-                  <p className="mt-1 text-sm text-slate-500">Дата: {new Date(order.createdAt).toLocaleDateString('ru-RU')}</p>
+                  <p className="mt-3 text-sm text-muted-foreground">Адрес: {order.address}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Сумма: {order.totalAmount} сом</p>
+                  <p className="mt-1 text-sm text-muted-foreground">Дата: {new Date(order.createdAt).toLocaleDateString('ru-RU')}</p>
                 </div>
               ))}
             </div>

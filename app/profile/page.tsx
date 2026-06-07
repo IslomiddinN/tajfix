@@ -37,30 +37,30 @@ export default function ProfilePage() {
   return (
     <main className="container py-10">
       <div className="mx-auto max-w-2xl space-y-6">
-        <section className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-card">
-          <h1 className="text-3xl font-semibold text-slate-950">Профиль</h1>
-          <div className="mt-6 space-y-4 text-slate-700">
+        <section className="rounded-[32px] border border-border bg-card p-8 shadow-card">
+          <h1 className="text-3xl font-semibold text-foreground">Профиль</h1>
+          <div className="mt-6 space-y-4 text-muted-foreground">
             <div>
-              <p className="text-sm text-slate-500">Имя</p>
-              <p className="mt-1 text-lg font-semibold text-slate-950">{profile?.name ?? session.user?.name}</p>
+              <p className="text-sm text-muted-foreground">Имя</p>
+              <p className="mt-1 text-lg font-semibold text-foreground">{profile?.name ?? session.user?.name}</p>
             </div>
             <div>
-              <p className="text-sm text-slate-500">Email</p>
-              <p className="mt-1 text-lg font-semibold text-slate-950">{profile?.email ?? session.user?.email}</p>
+              <p className="text-sm text-muted-foreground">Email</p>
+              <p className="mt-1 text-lg font-semibold text-foreground">{profile?.email ?? session.user?.email}</p>
             </div>
             <div>
-              <p className="text-sm text-slate-500">Телефон</p>
-              <p className="mt-1 text-lg font-semibold text-slate-950">{profile?.phone ?? 'Не указан'}</p>
+              <p className="text-sm text-muted-foreground">Телефон</p>
+              <p className="mt-1 text-lg font-semibold text-foreground">{profile?.phone ?? 'Не указан'}</p>
             </div>
           </div>
-          <button onClick={() => signOut()} className="mt-8 rounded-3xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
+          <button onClick={() => signOut()} className="mt-8 rounded-3xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
             Выйти
           </button>
         </section>
 
-        <section className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-card">
-          <h2 className="text-2xl font-semibold text-slate-950">Адреса</h2>
-          <p className="mt-3 text-slate-600">Добавляйте адреса в следующий релиз приложения.</p>
+        <section className="rounded-[32px] border border-border bg-card p-8 shadow-card">
+          <h2 className="text-2xl font-semibold text-foreground">Адреса</h2>
+          <p className="mt-3 text-muted-foreground">Добавляйте адреса в следующий релиз приложения.</p>
         </section>
       </div>
     </main>

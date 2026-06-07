@@ -19,11 +19,14 @@ export function Header() {
   const isAdmin = session?.user?.role === 'ADMIN';
   const isMaster = session?.user?.role === 'MASTER';
 
+  // The master cabinet renders its own full-screen mobile shell.
+  if (pathname?.startsWith('/master')) return null;
+
   return (
-    <header className="sticky top-0 z-50 border-b border-white/30 bg-white/70 backdrop-blur-xl shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2 font-semibold text-slate-950">
-          <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-brand text-white shadow-md shadow-brand/20">
+        <Link href="/" className="flex items-center gap-2 font-semibold text-foreground">
+          <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/30">
             <Wrench className="h-5 w-5" />
           </span>
           <span className="text-lg tracking-tight">TajFix</span>
@@ -37,7 +40,7 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                  active ? 'bg-white/90 text-brand shadow-sm shadow-slate-200/30' : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
+                  active ? 'bg-card text-primary' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
                 }`}
               >
                 {link.label}
@@ -50,19 +53,19 @@ export function Header() {
           <Link
             href="/cart"
             aria-label="Корзина"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:bg-slate-100"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition hover:bg-secondary hover:text-foreground"
           >
             <ShoppingCart className="h-5 w-5" />
           </Link>
 
           {status === 'loading' ? (
-            <div className="h-10 w-24 animate-pulse rounded-full bg-slate-100" />
+            <div className="h-10 w-24 animate-pulse rounded-full bg-secondary" />
           ) : session ? (
             <div className="flex items-center gap-2">
               {isAdmin ? (
                 <Link
                   href="/admin"
-                  className="hidden items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:inline-flex"
+                  className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
                 >
                   <LayoutDashboard className="h-4 w-4" /> Админ
                 </Link>
@@ -70,14 +73,14 @@ export function Header() {
               {isMaster ? (
                 <Link
                   href="/master"
-                  className="hidden items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:inline-flex"
+                  className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
                 >
                   <Wrench className="h-4 w-4" /> Кабинет
                 </Link>
               ) : null}
               <Link
                 href="/profile"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground"
               >
                 <User className="h-4 w-4" />
                 <span className="hidden max-w-[120px] truncate sm:inline">{session.user?.name ?? 'Профиль'}</span>
@@ -86,7 +89,7 @@ export function Header() {
                 type="button"
                 onClick={() => signOut({ callbackUrl: '/' })}
                 aria-label="Выйти"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-brand px-4 text-sm font-semibold text-white transition hover:bg-brand/90"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
               >
                 <LogOut className="h-4 w-4" />
                 <span className="hidden sm:inline">Выйти</span>
@@ -95,7 +98,7 @@ export function Header() {
           ) : (
             <Link
               href="/login"
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-brand px-5 text-sm font-semibold text-white transition hover:bg-brand/90"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
             >
               <LogIn className="h-4 w-4" /> Войти
             </Link>
