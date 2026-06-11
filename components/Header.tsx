@@ -3,8 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
-import { LogIn, LogOut, ShoppingCart, User, Wrench, LayoutDashboard } from 'lucide-react';
+import { LogIn, LogOut, ShoppingCart, Store, User, Wrench, LayoutDashboard } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { NotificationBell } from './NotificationBell';
 
 const navLinks = [
   { href: '/', label: 'Главная' },
@@ -19,6 +20,8 @@ export function Header() {
   const { data: session, status } = useSession();
   const isAdmin = session?.user?.role === 'ADMIN';
   const isMaster = session?.user?.role === 'MASTER';
+  const isSeller = session?.user?.role === 'SELLER';
+  const isPlainUser = session?.user?.role === 'USER';
 
   // The master cabinet renders its own full-screen mobile shell.
   if (pathname?.startsWith('/master')) return null;
@@ -57,6 +60,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          <NotificationBell variant="header" />
           <Link
             href="/cart"
             aria-label="Корзина"
@@ -83,6 +87,22 @@ export function Header() {
                   className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
                 >
                   <Wrench className="h-4 w-4" /> Кабинет
+                </Link>
+              ) : null}
+              {isSeller ? (
+                <Link
+                  href="/seller"
+                  className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
+                >
+                  <Store className="h-4 w-4" /> Магазин
+                </Link>
+              ) : null}
+              {isPlainUser ? (
+                <Link
+                  href="/seller/register"
+                  className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
+                >
+                  <Store className="h-4 w-4" /> Стать продавцом
                 </Link>
               ) : null}
               <Link

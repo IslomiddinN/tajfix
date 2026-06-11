@@ -42,6 +42,18 @@ async function main() {
     }
   });
 
+  const sellerUser = await prisma.user.upsert({
+    where: { email: 'seller@tajfix.local' },
+    update: {},
+    create: {
+      name: 'Техномир Душанбе',
+      email: 'seller@tajfix.local',
+      phone: '+992900000004',
+      passwordHash,
+      role: Role.SELLER
+    }
+  });
+
   const categories = await prisma.category.createMany({
     data: [
       { name: 'Стиральная машина', slug: 'washing-machine', type: CategoryType.SERVICE, icon: 'WashingMachine' },
@@ -272,6 +284,25 @@ async function main() {
   
  
 
+  // Demo seller profile + a couple of products assigned to it, so the seller cabinet is not empty.
+  const sellerProfile = await prisma.seller.upsert({
+    where: { userId: sellerUser.id },
+    update: {},
+    create: {
+      userId: sellerUser.id,
+      shopName: 'Техномир Душанбе',
+      description: 'Бытовая техника и электроника с доставкой по Душанбе.',
+      logoUrl: '',
+      phone: '+992900000004',
+      isApproved: true
+    }
+  });
+
+  await prisma.product.updateMany({
+    where: { slug: { in: ['samsung-ww70-eco-bubble', 'xiaomi-tv-a2-50', 'xiaomi-robot-vacuum-s10'] } },
+    data: { sellerId: sellerProfile.id }
+  });
+
   const masterProfile = await prisma.master.findFirst({ where: { name: 'Сорбон Ҳакимов' } });
   if (masterProfile && masterProfile.userId !== masterUser.id) {
     await prisma.master.update({ where: { id: masterProfile.id }, data: { userId: masterUser.id } });
@@ -300,7 +331,9 @@ async function main() {
     }
   }
 
-  console.log(`Seed completed. Admin: ${admin.email} / tajfix2026 · Demo user: ${user.email} / tajfix2026 · Master: ${masterUser.email} / tajfix2026`);
+  console.log(
+    `Seed completed. Admin: ${admin.email} / tajfix2026 · Demo user: ${user.email} / tajfix2026 · Master: ${masterUser.email} / tajfix2026 · Seller: ${sellerUser.email} / tajfix2026`
+  );
 }
 
 main()

@@ -34,10 +34,22 @@ export const authOptions: AuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+      } else if (trigger === 'update' && token.id) {
+        // Refresh role, name and email from the DB so changes (freshly-registered
+        // seller role, edited profile data) appear without a sign-out/in cycle.
+        const fresh = await prisma.user.findUnique({
+          where: { id: token.id },
+          select: { role: true, name: true, email: true }
+        });
+        if (fresh) {
+          token.role = fresh.role;
+          token.name = fresh.name;
+          token.email = fresh.email;
+        }
       }
       return token;
     },

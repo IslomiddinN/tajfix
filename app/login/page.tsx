@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { RoleEntryLinks } from '@/components/RoleEntryLinks';
 
 const loginSchema = z.object({
   email: z.string().email('Введите корректный email'),
@@ -68,6 +69,8 @@ export default function LoginPage() {
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Нет аккаунта? <Link href="/register" className="font-semibold text-primary">Зарегистрироваться</Link>
         </p>
+
+        <RoleEntryLinks />
       </div>
     </main>
   );

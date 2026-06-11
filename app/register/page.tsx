@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { RoleEntryLinks } from '@/components/RoleEntryLinks';
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Введите имя'),
@@ -87,6 +88,8 @@ export default function RegisterPage() {
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Уже есть аккаунт? <Link href="/login" className="font-semibold text-primary">Войти</Link>
         </p>
+
+        <RoleEntryLinks />
       </div>
     </main>
   );

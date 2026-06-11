@@ -5,6 +5,7 @@ import { Providers } from './providers';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { BottomNav } from '@/components/BottomNav';
+import { ServiceWorkerRegister } from '@/components/ServiceWorkerRegister';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
@@ -39,6 +40,11 @@ export const metadata: Metadata = {
   ],
   applicationName: 'TajFix',
   authors: [{ name: 'TajFix' }],
+  appleWebApp: {
+    capable: true,
+    title: 'TajFix',
+    statusBarStyle: 'default'
+  },
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -69,6 +75,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <Providers>
+          <ServiceWorkerRegister />
           <Header />
           {children}
           <Footer />

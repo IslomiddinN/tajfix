@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
 import { notifyTelegram, formatNewBooking } from '@/lib/notify';
+import { notify, notifyAdmins } from '@/lib/notifications';
 import { enforceRateLimit } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
@@ -77,6 +78,22 @@ export async function POST(request: Request) {
       estimatedPrice
     })
   );
+
+  // Уведомления в приложении: админам о новой заявке + назначенному мастеру.
+  await notifyAdmins({
+    type: 'booking',
+    title: 'Новая заявка на ремонт',
+    body: `${service.title} · ${user.name}`,
+    link: '/admin/orders'
+  });
+  if (resolvedMaster?.userId) {
+    await notify(resolvedMaster.userId, {
+      type: 'booking',
+      title: 'Новая заявка',
+      body: `${service.title} · ${address}`,
+      link: '/master/orders'
+    });
+  }
 
   return NextResponse.json(booking);
 }

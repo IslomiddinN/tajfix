@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
 import { notifyTelegram, formatNewOrder } from '@/lib/notify';
+import { notifyMany, notifyAdmins } from '@/lib/notifications';
 import { enforceRateLimit } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
@@ -114,6 +115,24 @@ export async function POST(request: Request) {
       }))
     })
   );
+
+  // Уведомления в приложении: продавцам о продаже их товаров + админам о новом заказе.
+  const sellerIds = Array.from(
+    new Set(cartItems.map((i) => i.product.sellerId).filter((id): id is string => Boolean(id)))
+  );
+  if (sellerIds.length > 0) {
+    const sellers = await prisma.seller.findMany({ where: { id: { in: sellerIds } }, select: { userId: true } });
+    await notifyMany(
+      sellers.map((s) => s.userId),
+      { type: 'sale', title: 'Новая продажа', body: 'В вашем магазине заказали товар', link: '/seller/orders' }
+    );
+  }
+  await notifyAdmins({
+    type: 'order',
+    title: 'Новый заказ',
+    body: `${user.name} — заказ на ${totalAmount.toLocaleString('ru-RU')} сом`,
+    link: '/admin/orders'
+  });
 
   return NextResponse.json(order);
 }

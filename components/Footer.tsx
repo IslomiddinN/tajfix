@@ -11,7 +11,8 @@ const columns = [
       { href: '/services', label: 'Услуги ремонта' },
       { href: '/shop', label: 'Магазин техники' },
       { href: '/masters', label: 'Мастера' },
-      { href: '/ai', label: 'AI-помощник' }
+      { href: '/ai', label: 'AI-помощник' },
+      { href: '/support', label: 'Чат поддержки' }
     ]
   },
   {

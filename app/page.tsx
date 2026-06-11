@@ -2,9 +2,10 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
-import { Bell, ChevronRight, Shield, ShoppingBag, Sparkles, Star, Truck, Wrench, Zap } from 'lucide-react';
+import { ChevronRight, Shield, ShoppingBag, Sparkles, Star, Truck, Wrench, Zap } from 'lucide-react';
 import { HomeSearch } from '@/components/HomeSearch';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { NotificationBell } from '@/components/NotificationBell';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,9 +30,9 @@ export default async function HomePage() {
   ]);
 
   return (
-    <main className="mx-auto w-full max-w-[480px] pb-28">
+    <main className="mx-auto w-full max-w-[480px] pb-28 lg:max-w-[1180px] lg:pb-16">
       {/* Gradient hero */}
-      <section className="relative overflow-hidden rounded-b-[2rem] bg-gradient-to-br from-primary to-blue-700 px-5 pb-16 pt-6 text-white">
+      <section className="relative overflow-hidden rounded-b-[2rem] bg-gradient-to-br from-primary to-blue-700 px-5 pb-16 pt-6 text-white lg:mt-6 lg:rounded-[2.5rem] lg:px-12 lg:pb-20 lg:pt-12">
         {/* Mobile-only top bar (desktop uses the global Header) */}
         <div className="mb-5 flex items-center justify-between sm:hidden">
           <Link href="/" className="flex items-center gap-2 text-lg font-bold">
@@ -42,27 +43,26 @@ export default async function HomePage() {
           </Link>
           <div className="flex items-center gap-2">
             <ThemeToggle className="grid h-10 w-10 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/25" />
-            <Link href="/orders" className="relative grid h-10 w-10 place-items-center rounded-full bg-white/15 transition hover:bg-white/25">
-              <Bell className="h-5 w-5" />
-              <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-green-400" />
-            </Link>
+            <NotificationBell variant="hero" />
           </div>
         </div>
 
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
-          Салом{firstName ? `, ${firstName}` : ''} 👋
-        </p>
-        <h1 className="mt-2 text-3xl font-black leading-tight">
-          Дом, который
-          <br />
-          <span className="text-cyan-200">работает идеально</span>
-        </h1>
+        <div className="lg:max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+            Салом{firstName ? `, ${firstName}` : ''} 👋
+          </p>
+          <h1 className="mt-2 text-3xl font-black leading-tight lg:text-5xl">
+            Дом, который
+            <br />
+            <span className="text-cyan-200">работает идеально</span>
+          </h1>
 
-        <HomeSearch />
+          <HomeSearch />
+        </div>
       </section>
 
-      {/* Quick tiles overlapping the hero */}
-      <div className="relative z-10 -mt-10 grid grid-cols-2 gap-3 px-5">
+      {/* Promo: быстрые плитки + AI. 2 кол. на телефоне (AI на всю ширину), 3 кол. на десктопе. */}
+      <div className="relative z-10 -mt-10 grid grid-cols-2 gap-3 px-5 lg:-mt-16 lg:grid-cols-3 lg:gap-5 lg:px-12">
         <Tile
           href="/services"
           icon={<Zap className="h-5 w-5" />}
@@ -77,26 +77,26 @@ export default async function HomePage() {
           title="Магазин техники"
           sub="Рассрочка 0 %"
         />
-      </div>
 
-      {/* AI helper card */}
-      <Link
-        href="/ai"
-        className="mx-5 mt-4 flex items-start gap-4 rounded-3xl bg-gradient-to-br from-primary to-teal-500 p-5 text-white"
-      >
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/20">
-          <Sparkles className="h-5 w-5" />
-        </span>
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wide text-white/80">TajFix AI</span>
-            <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold">BETA</span>
+        {/* AI helper card */}
+        <Link
+          href="/ai"
+          className="col-span-2 flex items-start gap-4 rounded-3xl bg-gradient-to-br from-primary to-teal-500 p-5 text-white lg:col-span-1 lg:flex-col"
+        >
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/20">
+            <Sparkles className="h-5 w-5" />
+          </span>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wide text-white/80">TajFix AI</span>
+              <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold">BETA</span>
+            </div>
+            <p className="mt-1.5 text-base font-bold leading-snug">«Стиралка стучит при отжиме» — что делать?</p>
+            <p className="mt-1 text-xs text-white/80">Спроси на тадж., рус. или English — подскажу причину и цену</p>
           </div>
-          <p className="mt-1.5 text-base font-bold leading-snug">«Стиралка стучит при отжиме» — что делать?</p>
-          <p className="mt-1 text-xs text-white/80">Спроси на тадж., рус. или English — подскажу причину и цену</p>
-        </div>
-        <ChevronRight className="mt-1 h-5 w-5 shrink-0 text-white/80" />
-      </Link>
+          <ChevronRight className="mt-1 h-5 w-5 shrink-0 text-white/80 lg:hidden" />
+        </Link>
+      </div>
 
       {/* Services / categories */}
       <Row title="Услуги мастеров" href="/services">
@@ -192,7 +192,7 @@ export default async function HomePage() {
       {/* Delivery promo */}
       <Link
         href="/shop"
-        className="mx-5 mt-7 flex items-center gap-4 rounded-3xl bg-gradient-to-r from-green-500 to-emerald-600 p-5 text-white"
+        className="mx-5 mt-7 flex items-center gap-4 rounded-3xl bg-gradient-to-r from-green-500 to-emerald-600 p-5 text-white lg:mx-12 lg:mt-10 lg:p-8"
       >
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/20">
           <Truck className="h-6 w-6" />
@@ -232,14 +232,14 @@ function Tile({
 
 function Row({ title, href, children }: { title: string; href: string; children: React.ReactNode }) {
   return (
-    <section className="mt-7 px-5">
+    <section className="mt-7 px-5 lg:mt-10 lg:px-12">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-foreground">{title}</h2>
+        <h2 className="text-lg font-bold text-foreground lg:text-2xl">{title}</h2>
         <Link href={href} className="text-sm font-semibold text-primary">
           Все
         </Link>
       </div>
-      <div className="no-scrollbar -mx-5 flex gap-3 overflow-x-auto px-5 pb-1">{children}</div>
+      <div className="no-scrollbar -mx-5 flex gap-3 overflow-x-auto px-5 pb-1 lg:-mx-12 lg:gap-5 lg:px-12">{children}</div>
     </section>
   );
 }

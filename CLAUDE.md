@@ -26,7 +26,7 @@ After changing `prisma/schema.prisma`, run `prisma:generate` (and usually `prism
 
 `prisma migrate dev` is interactive and aborts in this non-interactive environment whenever it needs to confirm a warning (e.g. adding a unique constraint). Workaround: generate the SQL with `npx prisma migrate diff --from-url <DATABASE_URL> --to-schema-datamodel prisma/schema.prisma --script`, drop it into a new `prisma/migrations/<timestamp>_<name>/migration.sql` folder, then apply with `npx prisma migrate deploy`.
 
-Seeded demo accounts (password `tajfix2026`): `admin@tajfix.local` (ADMIN), `user@tajfix.local` (USER), `master@tajfix.local` (MASTER — linked to the seeded master "Сорбон Ҳакимов" with a demo booking).
+Seeded demo accounts (password `tajfix2026`): `admin@tajfix.local` (ADMIN), `user@tajfix.local` (USER), `master@tajfix.local` (MASTER — linked to the seeded master "Сорбон Ҳакимов" with a demo booking), `seller@tajfix.local` (SELLER — shop "Техномир Душанбе" owning a few seeded products).
 
 ## Architecture
 
@@ -45,6 +45,7 @@ The schema spans two business domains sharing one `User`:
 - **Shop flow**: `Product` → `CartItem` (per user) → checkout creates a `ProductOrder` + `ProductOrderItem[]` and clears the cart. Item prices are snapshotted onto `ProductOrderItem.price` at checkout time.
 - **Repair flow**: `Service` + optional `Master` → `RepairBooking`.
 - `Master` optionally links to a `User` via `Master.userId` (`@unique`, one-to-one). A user with `role = MASTER` reaches their assigned bookings through this link — see the master dashboard (`app/master/page.tsx`) and `app/api/master/bookings/*`, which resolve the master by `master.userId === session.user.id` before returning/mutating only that master's `RepairBooking`s.
+- **Seller flow (multi-vendor)**: `Seller` links to a `User` via `Seller.userId` (`@unique`, one-to-one), and `Product.sellerId` is a *nullable* owner (admin-created products have none). A user with `role = SELLER` reaches their own products/sales through this link — see the seller cabinet (`app/seller/*`, admin-style sidebar layout) and `app/api/seller/*`, resolved via `lib/seller.ts` `getCurrentSeller()` (`seller.userId === session.user.id`). Sellers self-register at `/seller/register` (`POST /api/seller/register` creates the `Seller` and flips the user's role to `SELLER`; the client calls NextAuth `update()` so the JWT picks up the new role without re-login — the `jwt` callback in `lib/authOptions.ts` re-reads the role on `trigger === 'update'`). An order can contain items from several sellers, so sellers **only view** their own `ProductOrderItem`s and toggle a per-item `fulfilled` flag (готовность к отгрузке); overall `ProductOrder.status` stays admin-controlled.
 - `Category.type` is an enum (`SERVICE | PRODUCT`) that partitions categories across the two domains.
 - Orders and bookings share the `OrderStatus` lifecycle: `NEW → CONFIRMED → IN_PROGRESS → COMPLETED → CANCELLED`.
 - `Review` polymorphically references either a `Master` or a `Product` (both nullable).

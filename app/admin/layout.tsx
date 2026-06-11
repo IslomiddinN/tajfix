@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { BarChart3, Boxes, ClipboardList, Users, Wrench } from 'lucide-react';
+import { BarChart3, Boxes, ClipboardList, Headset, User, Users, Wrench } from 'lucide-react';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { EmptyState } from '@/components/EmptyState';
 
@@ -13,7 +13,9 @@ const links = [
   { href: '/admin/products', label: 'Товары', icon: Boxes },
   { href: '/admin/services', label: 'Услуги', icon: Wrench },
   { href: '/admin/masters', label: 'Мастера', icon: Users },
-  { href: '/admin/orders', label: 'Заказы', icon: ClipboardList }
+  { href: '/admin/orders', label: 'Заказы', icon: ClipboardList },
+  { href: '/admin/support', label: 'Поддержка', icon: Headset },
+  { href: '/admin/profile', label: 'Профиль', icon: User }
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
