@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Store, Wrench } from 'lucide-react';
+import { appHref } from '@/lib/appUrls';
 
 /**
  * Ролевые кнопки-ссылки для панели входа/регистрации.
@@ -14,7 +15,7 @@ export function RoleEntryLinks() {
       </p>
       <div className="grid grid-cols-2 gap-3">
         <Link
-          href="/seller/register"
+          href={appHref('seller', '/seller/register')}
           className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-secondary px-4 py-4 text-center transition hover:border-primary hover:bg-card"
         >
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -24,7 +25,7 @@ export function RoleEntryLinks() {
           <span className="text-[11px] text-muted-foreground">Открыть магазин</span>
         </Link>
         <Link
-          href="/master"
+          href={appHref('master', '/master')}
           className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-secondary px-4 py-4 text-center transition hover:border-primary hover:bg-card"
         >
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary">

@@ -6,6 +6,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { LogIn, LogOut, ShoppingCart, Store, User, Wrench, LayoutDashboard } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { NotificationBell } from './NotificationBell';
+import { appHref } from '@/lib/appUrls';
 
 const navLinks = [
   { href: '/', label: 'Главная' },
@@ -75,7 +76,7 @@ export function Header() {
             <div className="flex items-center gap-2">
               {isAdmin ? (
                 <Link
-                  href="/admin"
+                  href={appHref('admin', '/admin')}
                   className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
                 >
                   <LayoutDashboard className="h-4 w-4" /> Админ
@@ -83,7 +84,7 @@ export function Header() {
               ) : null}
               {isMaster ? (
                 <Link
-                  href="/master"
+                  href={appHref('master', '/master')}
                   className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
                 >
                   <Wrench className="h-4 w-4" /> Кабинет
@@ -91,7 +92,7 @@ export function Header() {
               ) : null}
               {isSeller ? (
                 <Link
-                  href="/seller"
+                  href={appHref('seller', '/seller')}
                   className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
                 >
                   <Store className="h-4 w-4" /> Магазин
@@ -99,7 +100,7 @@ export function Header() {
               ) : null}
               {isPlainUser ? (
                 <Link
-                  href="/seller/register"
+                  href={appHref('seller', '/seller/register')}
                   className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
                 >
                   <Store className="h-4 w-4" /> Стать продавцом

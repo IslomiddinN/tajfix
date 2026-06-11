@@ -1,5 +1,9 @@
 node_modules
 .next
+apps/*/.next
+apps/*/next-env.d.ts
+apps/*/tsconfig.tsbuildinfo
+tsconfig.tsbuildinfo
 out
 .env
 .DS_Store

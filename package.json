@@ -1,12 +1,22 @@
 {
-  "name": "tajfix",
+  "name": "tajfix-monorepo",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx",
+    "dev": "npm run dev -w @tajfix/client",
+    "dev:client": "npm run dev -w @tajfix/client",
+    "dev:master": "npm run dev -w @tajfix/master",
+    "dev:seller": "npm run dev -w @tajfix/seller",
+    "dev:admin": "npm run dev -w @tajfix/admin",
+    "build": "npm run build -w @tajfix/client && npm run build -w @tajfix/master && npm run build -w @tajfix/seller && npm run build -w @tajfix/admin",
+    "build:client": "npm run build -w @tajfix/client",
+    "build:master": "npm run build -w @tajfix/master",
+    "build:seller": "npm run build -w @tajfix/seller",
+    "build:admin": "npm run build -w @tajfix/admin",
+    "lint": "npm run lint -w @tajfix/client",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
