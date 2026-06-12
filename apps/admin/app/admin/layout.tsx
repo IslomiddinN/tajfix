@@ -40,6 +40,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         >
           Войти
         </Link>
+        <p className="text-sm text-muted-foreground">
+          Нет аккаунта?{' '}
+          <Link href="/register" className="font-semibold text-primary">
+            Зарегистрироваться
+          </Link>
+        </p>
       </main>
     );
   }

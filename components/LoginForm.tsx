@@ -24,7 +24,7 @@ interface LoginFormProps {
   subtitle?: string;
   /** Show the "войти как продавец/мастер" role links (client site only). */
   showRoleLinks?: boolean;
-  /** Show the "Зарегистрироваться" link (client site only). */
+  /** Show the "Зарегистрироваться" link to this app's own /register page. */
   showRegister?: boolean;
   /** Show a "← На сайт TajFix" link back to the public site (sub-apps). */
   backToSite?: boolean;

@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { EmptyState } from '@/components/EmptyState';
+import { appHref } from '@/lib/appUrls';
 
 type Role = 'USER' | 'ADMIN' | 'MASTER' | 'SELLER';
 
@@ -180,16 +181,16 @@ export default function ProfilePage() {
 
         {/* Вход в рабочий кабинет по роли */}
         {role === 'SELLER' ? (
-          <CabinetLink href="/seller" icon={Store} title="Кабинет продавца" subtitle="Товары, продажи, финансы и профиль магазина" />
+          <CabinetLink href={appHref('seller', '/seller')} icon={Store} title="Кабинет продавца" subtitle="Товары, продажи, финансы и профиль магазина" />
         ) : null}
         {role === 'MASTER' ? (
-          <CabinetLink href="/master" icon={Wrench} title="Кабинет мастера" subtitle="Заявки, финансы, рейтинг и профиль" />
+          <CabinetLink href={appHref('master', '/master')} icon={Wrench} title="Кабинет мастера" subtitle="Заявки, финансы, рейтинг и профиль" />
         ) : null}
         {role === 'ADMIN' ? (
-          <CabinetLink href="/admin" icon={LayoutDashboard} title="Админ-панель" subtitle="Товары, услуги, заказы, поддержка" />
+          <CabinetLink href={appHref('admin', '/admin')} icon={LayoutDashboard} title="Админ-панель" subtitle="Товары, услуги, заказы, поддержка" />
         ) : null}
         {role === 'USER' ? (
-          <CabinetLink href="/seller/register" icon={Store} title="Стать продавцом" subtitle="Откройте свой магазин на TajFix" />
+          <CabinetLink href={appHref('seller', '/register')} icon={Store} title="Стать продавцом" subtitle="Откройте свой магазин на TajFix" />
         ) : null}
 
         <CabinetLink href="/support" icon={Headset} title="Поддержка" subtitle="Напишите нам — поможем с заказом, ремонтом или товаром" />

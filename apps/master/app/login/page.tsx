@@ -8,6 +8,7 @@ export default function LoginPage() {
         fallbackCallback="/master"
         title="Вход для мастеров"
         subtitle="Войдите, чтобы открыть кабинет мастера."
+        showRegister
         backToSite
       />
     </Suspense>

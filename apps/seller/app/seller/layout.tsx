@@ -38,6 +38,12 @@ export default function SellerLayout({ children }: { children: ReactNode }) {
         >
           Войти
         </Link>
+        <p className="text-sm text-muted-foreground">
+          Нет аккаунта продавца?{' '}
+          <Link href="/register" className="font-semibold text-primary">
+            Зарегистрироваться
+          </Link>
+        </p>
       </main>
     );
   }

@@ -8,6 +8,7 @@ export default function LoginPage() {
         fallbackCallback="/seller"
         title="Вход для магазинов"
         subtitle="Войдите, чтобы открыть кабинет продавца."
+        showRegister
         backToSite
       />
     </Suspense>

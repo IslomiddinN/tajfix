@@ -100,7 +100,7 @@ export function Header() {
               ) : null}
               {isPlainUser ? (
                 <Link
-                  href={appHref('seller', '/seller/register')}
+                  href={appHref('seller', '/register')}
                   className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
                 >
                   <Store className="h-4 w-4" /> Стать продавцом

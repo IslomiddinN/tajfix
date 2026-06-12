@@ -1,32 +1,22 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/authOptions';
-import { prisma } from '@/lib/prisma';
+import { baseAccountFields, createAccount, normalizePhone } from '@/lib/accountRegistration';
+import { enforceRateLimit } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
 
+// Регистрация продавца «с нуля»: создаём новый аккаунт с ролью SELLER и магазин в одной транзакции.
 const schema = z.object({
+  ...baseAccountFields,
   shopName: z.string().trim().min(2, 'Название магазина слишком короткое').max(80),
   description: z.string().trim().max(500).optional().default(''),
-  logoUrl: z.string().trim().url('Неверная ссылка на логотип').max(500).optional().or(z.literal('')),
-  phone: z
-    .string()
-    .trim()
-    .regex(/^\+?\d[\d\s\-()]{7,17}$/, 'Неверный номер телефона')
+  logoUrl: z.string().trim().url('Неверная ссылка на логотип').max(500).optional().or(z.literal(''))
 });
 
 export async function POST(request: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) {
-    return NextResponse.json({ message: 'Войдите в аккаунт' }, { status: 401 });
-  }
-  if (session.user.role === 'ADMIN' || session.user.role === 'MASTER') {
-    return NextResponse.json(
-      { message: 'Этот аккаунт уже используется как администратор или мастер' },
-      { status: 409 }
-    );
-  }
+  // Не более 5 регистраций с одного IP за 10 минут.
+  const limited = enforceRateLimit(request, 'seller-register', 5, 10 * 60_000);
+  if (limited) return limited;
 
   const body = await request.json().catch(() => null);
   const parsed = schema.safeParse(body);
@@ -34,22 +24,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: parsed.error.issues[0]?.message ?? 'Неверные данные' }, { status: 400 });
   }
 
-  const existing = await prisma.seller.findUnique({ where: { userId: session.user.id } });
-  if (existing) {
-    return NextResponse.json({ message: 'Вы уже зарегистрированы как продавец' }, { status: 409 });
-  }
-
-  const { shopName, description } = parsed.data;
-  const phone = parsed.data.phone.replace(/[\s\-()]/g, '');
+  const { name, email, phone, password, shopName } = parsed.data;
+  const description = parsed.data.description ?? '';
   const logoUrl = parsed.data.logoUrl || '';
 
-  const seller = await prisma.$transaction(async (tx) => {
-    const created = await tx.seller.create({
-      data: { shopName, description, logoUrl, phone, userId: session.user.id }
-    });
-    await tx.user.update({ where: { id: session.user.id }, data: { role: 'SELLER' } });
-    return created;
-  });
+  const result = await createAccount(
+    { name, email, phone, password, role: 'SELLER' },
+    async (tx, userId) => {
+      await tx.seller.create({
+        data: { shopName, description, logoUrl, phone: normalizePhone(phone), userId }
+      });
+    }
+  );
+  if (!result.ok) return NextResponse.json({ message: result.message }, { status: result.status });
 
-  return NextResponse.json({ success: true, seller }, { status: 201 });
+  return NextResponse.json({ success: true }, { status: 201 });
 }

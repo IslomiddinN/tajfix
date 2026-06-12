@@ -8,6 +8,7 @@ export default function LoginPage() {
         fallbackCallback="/admin"
         title="Вход в админ-панель"
         subtitle="Доступ только для администраторов TajFix."
+        showRegister
         backToSite
       />
     </Suspense>
