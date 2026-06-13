@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { baseAccountFields, createAccount, normalizePhone } from '@/lib/accountRegistration';
 import { enforceRateLimit } from '@/lib/rateLimit';
+import { notifyAdmins } from '@/lib/notifications';
+import { notifyTelegram, formatNewSeller } from '@/lib/notify';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,6 +39,16 @@ export async function POST(request: Request) {
     }
   );
   if (!result.ok) return NextResponse.json({ message: result.message }, { status: result.status });
+
+  // Оповещаем персонал о новом магазине (best-effort, не блокирует ответ).
+  const cleanPhone = normalizePhone(phone);
+  await notifyAdmins({
+    type: 'system',
+    title: 'Новый продавец',
+    body: `${shopName} — ${name}`,
+    link: '/admin'
+  });
+  await notifyTelegram(formatNewSeller({ shopName, ownerName: name, phone: cleanPhone }));
 
   return NextResponse.json({ success: true }, { status: 201 });
 }

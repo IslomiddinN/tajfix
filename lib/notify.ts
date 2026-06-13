@@ -52,6 +52,28 @@ export function formatNewOrder(params: {
   ].join('\n');
 }
 
+export function formatSupportMessage(params: { customerName: string; text: string }): string {
+  return ['💬 <b>Новое сообщение в поддержку</b>', `👤 ${params.customerName}`, '', params.text].join('\n');
+}
+
+export function formatNewSeller(params: { shopName: string; ownerName: string; phone: string }): string {
+  return [
+    '🏪 <b>Новый продавец</b>',
+    `Магазин: <b>${params.shopName}</b>`,
+    `👤 ${params.ownerName}`,
+    `📞 ${params.phone}`
+  ].join('\n');
+}
+
+export function formatNewMaster(params: { name: string; specialization: string; phone: string }): string {
+  return [
+    '🔧 <b>Новый мастер</b>',
+    `👤 ${params.name}`,
+    `🛠 ${params.specialization}`,
+    `📞 ${params.phone}`
+  ].join('\n');
+}
+
 export function formatNewBooking(params: {
   bookingId: string;
   customerName: string;

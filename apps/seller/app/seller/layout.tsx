@@ -4,14 +4,16 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { BarChart3, Boxes, ClipboardList, User, Wallet } from 'lucide-react';
+import { BarChart3, Bell, Boxes, ClipboardList, User, Wallet } from 'lucide-react';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { EmptyState } from '@/components/EmptyState';
+import { useUnreadNotifications } from '@/lib/useUnreadNotifications';
 
 const links = [
   { href: '/seller', label: 'Обзор', icon: BarChart3 },
   { href: '/seller/products', label: 'Мои товары', icon: Boxes },
   { href: '/seller/orders', label: 'Продажи', icon: ClipboardList },
+  { href: '/seller/notifications', label: 'Уведомления', icon: Bell },
   { href: '/seller/finance', label: 'Финансы', icon: Wallet },
   { href: '/seller/profile', label: 'Профиль', icon: User }
 ];
@@ -19,6 +21,7 @@ const links = [
 export default function SellerLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { data: session, status } = useSession();
+  const unread = useUnreadNotifications();
 
   if (status === 'loading') {
     return (
@@ -67,6 +70,7 @@ export default function SellerLayout({ children }: { children: ReactNode }) {
             {links.map((link) => {
               const Icon = link.icon;
               const active = pathname === link.href;
+              const showBadge = link.href === '/seller/notifications' && unread > 0;
               return (
                 <Link
                   key={link.href}
@@ -76,6 +80,11 @@ export default function SellerLayout({ children }: { children: ReactNode }) {
                   }`}
                 >
                   <Icon className="h-4 w-4" /> {link.label}
+                  {showBadge ? (
+                    <span className="ml-auto grid h-5 min-w-[1.25rem] place-items-center rounded-full bg-destructive px-1 text-[10px] font-bold text-white">
+                      {unread > 9 ? '9+' : unread}
+                    </span>
+                  ) : null}
                 </Link>
               );
             })}

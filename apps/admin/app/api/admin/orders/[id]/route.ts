@@ -41,6 +41,21 @@ export async function PATCH(request: Request, { params }: Params) {
       body: `Заявка #${params.id.slice(0, 8)}: ${STATUS_LABEL[status]}`,
       link: '/orders'
     });
+    // Назначенного мастера тоже оповещаем о смене статуса его заявки.
+    if (booking.masterId) {
+      const master = await prisma.master.findUnique({
+        where: { id: booking.masterId },
+        select: { userId: true }
+      });
+      if (master?.userId) {
+        await notify(master.userId, {
+          type: 'booking',
+          title: 'Статус заявки обновлён',
+          body: `Заявка #${params.id.slice(0, 8)}: ${STATUS_LABEL[status]}`,
+          link: '/master'
+        });
+      }
+    }
     return NextResponse.json(updated);
   }
   const order = await prisma.productOrder.findUnique({ where: { id: params.id } });

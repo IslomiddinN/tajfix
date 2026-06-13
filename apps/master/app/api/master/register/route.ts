@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { baseAccountFields, createAccount, normalizePhone } from '@/lib/accountRegistration';
 import { enforceRateLimit } from '@/lib/rateLimit';
+import { notifyAdmins } from '@/lib/notifications';
+import { notifyTelegram, formatNewMaster } from '@/lib/notify';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,6 +50,16 @@ export async function POST(request: Request) {
     }
   );
   if (!result.ok) return NextResponse.json({ message: result.message }, { status: result.status });
+
+  // Оповещаем персонал о новом мастере (best-effort).
+  const cleanPhone = normalizePhone(phone);
+  await notifyAdmins({
+    type: 'system',
+    title: 'Новый мастер',
+    body: `${name} — ${specialization}`,
+    link: '/admin/masters'
+  });
+  await notifyTelegram(formatNewMaster({ name, specialization, phone: cleanPhone }));
 
   return NextResponse.json({ success: true }, { status: 201 });
 }

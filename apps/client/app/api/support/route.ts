@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
 import { prisma } from '@/lib/prisma';
 import { notifyAdmins } from '@/lib/notifications';
+import { notifyTelegram, formatSupportMessage } from '@/lib/notify';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,12 +49,14 @@ export async function POST(request: Request) {
   // Переоткрываем тред и обновляем updatedAt для сортировки в админке.
   await prisma.supportThread.update({ where: { id: thread.id }, data: { status: 'OPEN' } });
 
+  const customerName = session.user.name ?? 'Клиент';
   await notifyAdmins({
     type: 'support',
     title: 'Новое сообщение в поддержку',
-    body: `${session.user.name ?? 'Клиент'}: ${text.slice(0, 80)}`,
+    body: `${customerName}: ${text.slice(0, 80)}`,
     link: '/admin/support'
   });
+  await notifyTelegram(formatSupportMessage({ customerName, text }));
 
   return NextResponse.json(message, { status: 201 });
 }

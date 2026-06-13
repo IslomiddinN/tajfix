@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getCurrentSeller } from '@/lib/seller';
+import { notifyAdmins } from '@/lib/notifications';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,5 +32,14 @@ export async function PATCH(request: Request, { params }: Params) {
     where: { id: params.id },
     data: { fulfilled }
   });
+  // Когда продавец отмечает позицию готовой к отгрузке — оповещаем админов.
+  if (fulfilled) {
+    await notifyAdmins({
+      type: 'system',
+      title: 'Позиция готова к отгрузке',
+      body: `${seller.shopName}: позиция заказа #${item.orderId.slice(0, 8)} готова`,
+      link: '/admin/orders'
+    });
+  }
   return NextResponse.json(updated);
 }
