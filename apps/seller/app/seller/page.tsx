@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Boxes, ClipboardList, PackageCheck, Wallet } from 'lucide-react';
+import { ArrowRight, Boxes, ClipboardList, PackageCheck, Wallet } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 interface Overview {
@@ -25,57 +26,105 @@ export default function SellerHomePage() {
 
   if (loading) return <LoadingSpinner />;
 
+  const seller = data?.seller;
   const stats = data?.stats;
+  const shopName = seller?.shopName ?? 'Магазин';
 
   return (
-    <div>
-      <div className="mb-8 flex items-center gap-4">
-        {data?.seller.logoUrl ? (
-          <img src={data.seller.logoUrl} alt={data.seller.shopName} className="h-14 w-14 rounded-2xl object-cover" />
+    <div className="fade-up">
+      {/* Шапка */}
+      <div className="flex items-center gap-3">
+        {seller?.logoUrl ? (
+          <img src={seller.logoUrl} alt={shopName} className="h-12 w-12 rounded-2xl object-cover" />
         ) : (
-          <div className="grid h-14 w-14 place-items-center rounded-2xl bg-primary/10 text-2xl">🏪</div>
+          <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-blue-700 text-xl text-primary-foreground">
+            🏪
+          </div>
         )}
-        <div>
-          <h1 className="text-3xl font-semibold text-foreground">{data?.seller.shopName ?? 'Магазин'}</h1>
-          <p className="mt-1 text-muted-foreground">Кабинет продавца — товары, продажи и доход.</p>
+        <div className="min-w-0">
+          <p className="text-xs text-muted-foreground">Кабинет продавца</p>
+          <h1 className="truncate text-2xl font-bold leading-tight text-foreground">{shopName}</h1>
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard icon={Boxes} label="Товаров" value={stats?.productsCount ?? 0} />
-        <StatCard icon={ClipboardList} label="Заказов с моими товарами" value={stats?.ordersCount ?? 0} />
-        <StatCard icon={Wallet} label="Доход (завершённые)" value={fmtMoney(stats?.revenue ?? 0)} />
-        <StatCard icon={PackageCheck} label="Ждут отгрузки" value={stats?.pendingItems ?? 0} />
+      {/* Метрики */}
+      <div className="mt-5 grid grid-cols-2 gap-3 xl:grid-cols-4">
+        <Stat icon={Wallet} label="Доход (завершённые)" value={fmtMoney(stats?.revenue ?? 0)} accent />
+        <Stat icon={Boxes} label="Товаров" value={stats?.productsCount ?? 0} />
+        <Stat icon={ClipboardList} label="Заказов с товарами" value={stats?.ordersCount ?? 0} />
+        <Stat icon={PackageCheck} label="Ждут отгрузки" value={stats?.pendingItems ?? 0} />
       </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <Link
-          href="/seller/products"
-          className="rounded-[32px] border border-border bg-card p-8 shadow-card transition hover:border-primary"
-        >
-          <Boxes className="h-7 w-7 text-primary" />
-          <h2 className="mt-4 text-xl font-semibold text-foreground">Управление товарами</h2>
-          <p className="mt-2 text-muted-foreground">Добавляйте, редактируйте и удаляйте свои товары в магазине.</p>
-        </Link>
-        <Link
-          href="/seller/orders"
-          className="rounded-[32px] border border-border bg-card p-8 shadow-card transition hover:border-primary"
-        >
-          <ClipboardList className="h-7 w-7 text-primary" />
-          <h2 className="mt-4 text-xl font-semibold text-foreground">Продажи</h2>
-          <p className="mt-2 text-muted-foreground">Заказы с вашими товарами и отметка готовности к отгрузке.</p>
-        </Link>
-      </div>
+      {/* Быстрые действия */}
+      <section className="mt-6">
+        <h2 className="mb-3 text-base font-bold text-foreground">Быстрые действия</h2>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <ActionCard
+            href="/seller/products"
+            icon={Boxes}
+            title="Управление товарами"
+            desc="Добавляйте, редактируйте и удаляйте свои товары."
+          />
+          <ActionCard
+            href="/seller/orders"
+            icon={ClipboardList}
+            title="Продажи"
+            desc="Заказы с вашими товарами и готовность к отгрузке."
+          />
+        </div>
+      </section>
     </div>
   );
 }
 
-function StatCard({ icon: Icon, label, value }: { icon: any; label: string; value: React.ReactNode }) {
+function Stat({
+  icon: Icon,
+  label,
+  value,
+  accent
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: React.ReactNode;
+  accent?: boolean;
+}) {
   return (
-    <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-      <Icon className="h-6 w-6 text-primary" />
-      <p className="mt-3 text-sm text-muted-foreground">{label}</p>
-      <p className="mt-1 text-3xl font-semibold text-foreground">{value}</p>
+    <div
+      className={`rounded-2xl p-4 ${
+        accent ? 'bg-gradient-to-br from-primary to-blue-700 text-primary-foreground' : 'border border-border bg-card'
+      }`}
+    >
+      <Icon className={`h-5 w-5 ${accent ? 'text-primary-foreground/90' : 'text-primary'}`} />
+      <p className={`mt-2 text-2xl font-bold ${accent ? '' : 'text-foreground'}`}>{value}</p>
+      <p className={`mt-0.5 text-[11px] ${accent ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{label}</p>
     </div>
+  );
+}
+
+function ActionCard({
+  href,
+  icon: Icon,
+  title,
+  desc
+}: {
+  href: string;
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group flex items-start gap-3 rounded-3xl border border-border bg-card p-5 transition hover:border-primary"
+    >
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-primary/10 text-primary">
+        <Icon className="h-5 w-5" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="font-semibold text-foreground">{title}</p>
+        <p className="mt-1 text-sm text-muted-foreground">{desc}</p>
+      </div>
+      <ArrowRight className="h-5 w-5 shrink-0 text-muted-foreground transition group-hover:text-primary" />
+    </Link>
   );
 }

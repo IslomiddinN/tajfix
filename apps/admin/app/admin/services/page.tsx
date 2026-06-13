@@ -104,19 +104,19 @@ export default function AdminServicesPage() {
   });
 
   return (
-    <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold text-foreground">Услуги</h1>
-          <p className="mt-2 text-muted-foreground">Управление услугами ремонта.</p>
+    <div className="fade-up">
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold text-foreground">Услуги</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Управление услугами ремонта.</p>
         </div>
-        <button onClick={openCreate} className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+        <button onClick={openCreate} className="inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
           <Plus className="h-4 w-4" /> Добавить
         </button>
       </div>
 
       {form ? (
-        <div className="mb-6 rounded-[28px] border border-border bg-card p-6 shadow-card">
+        <div className="mb-5 rounded-3xl border border-border bg-card p-5 fade-up">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-semibold text-foreground">{editingId ? 'Редактирование услуги' : 'Новая услуга'}</h2>
             <button onClick={() => setForm(null)} className="rounded-full p-2 text-muted-foreground hover:bg-secondary"><X className="h-5 w-5" /></button>
@@ -141,39 +141,27 @@ export default function AdminServicesPage() {
         </div>
       ) : null}
 
-      <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-card">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-secondary text-muted-foreground">
-            <tr>
-              <th className="px-5 py-3 font-medium">Услуга</th>
-              <th className="px-5 py-3 font-medium">Цена от</th>
-              <th className="px-5 py-3 text-right font-medium">Действия</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {services.map((s) => (
-              <tr key={s.id}>
-                <td className="px-5 py-3">
-                  <div className="flex items-center gap-3">
-                    <img src={s.imageUrl} alt={s.title} className="h-12 w-12 rounded-xl object-cover" />
-                    <p className="font-medium text-foreground">{s.title}</p>
-                  </div>
-                </td>
-                <td className="px-5 py-3 text-muted-foreground">{s.priceFrom} сом</td>
-                <td className="px-5 py-3">
-                  <div className="flex justify-end gap-2">
-                    <button onClick={() => openEdit(s)} className="rounded-full border border-border p-2 text-muted-foreground hover:bg-secondary"><Pencil className="h-4 w-4" /></button>
-                    <button onClick={() => remove(s.id)} className="rounded-full border border-border p-2 text-red-600 hover:bg-red-50"><Trash2 className="h-4 w-4" /></button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {services.length === 0 ? (
-              <tr><td colSpan={3} className="px-5 py-8 text-center text-muted-foreground">Услуг пока нет</td></tr>
-            ) : null}
-          </tbody>
-        </table>
-      </div>
+      {services.length === 0 ? (
+        <div className="rounded-3xl border border-dashed border-border bg-card/40 p-10 text-center text-sm text-muted-foreground">
+          Услуг пока нет
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {services.map((s) => (
+            <div key={s.id} className="fade-up flex items-center gap-3 rounded-3xl border border-border bg-card p-4">
+              <img src={s.imageUrl} alt={s.title} className="h-14 w-14 shrink-0 rounded-2xl object-cover" />
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-semibold text-foreground">{s.title}</p>
+                <p className="mt-0.5 text-sm font-bold text-primary">от {s.priceFrom} сом</p>
+              </div>
+              <div className="flex shrink-0 gap-2">
+                <button onClick={() => openEdit(s)} className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground transition hover:bg-secondary hover:text-foreground"><Pencil className="h-4 w-4" /></button>
+                <button onClick={() => remove(s.id)} className="grid h-9 w-9 place-items-center rounded-full border border-border text-destructive transition hover:bg-destructive/10"><Trash2 className="h-4 w-4" /></button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

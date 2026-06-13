@@ -59,9 +59,9 @@ export default function SellerProfilePage() {
   const level = stats.ordersCount >= 100 ? 'Топ-магазин' : stats.ordersCount >= 30 ? 'Растущий' : 'Новичок';
 
   return (
-    <div>
+    <div className="fade-up">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-semibold text-foreground">Профиль магазина</h1>
+        <h1 className="text-2xl font-bold text-foreground">Профиль магазина</h1>
         <button
           onClick={() => setEditOpen(true)}
           className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary/25"
@@ -70,11 +70,13 @@ export default function SellerProfilePage() {
         </button>
       </div>
 
-      <div className="mt-6 flex items-center gap-4 rounded-[28px] border border-border bg-card p-5 shadow-card">
+      <div className="mt-5 flex items-center gap-4 rounded-3xl border border-border bg-card p-5">
         {seller.logoUrl ? (
           <img src={seller.logoUrl} alt={seller.shopName} className="h-16 w-16 rounded-2xl object-cover" />
         ) : (
-          <div className="grid h-16 w-16 place-items-center rounded-2xl bg-primary/10 text-3xl">🏪</div>
+          <div className="grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-primary to-blue-700 text-3xl text-primary-foreground">
+            🏪
+          </div>
         )}
         <div className="flex-1">
           <p className="text-xl font-bold text-foreground">{seller.shopName}</p>
@@ -89,7 +91,7 @@ export default function SellerProfilePage() {
         <StatCard icon={Boxes} label="Товаров" value={stats.productsCount} />
         <StatCard icon={ClipboardList} label="Заказов" value={stats.ordersCount} />
         <StatCard icon={Wallet} label="Доход" value={fmtMoney(stats.revenue)} />
-        <div className="rounded-[28px] border border-border bg-card p-5 text-center shadow-card">
+        <div className="rounded-2xl border border-border bg-card p-4 text-center">
           <span
             className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${
               seller.isApproved ? 'bg-green-500/15 text-green-500' : 'bg-muted text-muted-foreground'
@@ -102,9 +104,9 @@ export default function SellerProfilePage() {
         </div>
       </div>
 
-      <section className="mt-8">
-        <h2 className="mb-3 text-lg font-bold text-foreground">Данные магазина</h2>
-        <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-card">
+      <section className="mt-6">
+        <h2 className="mb-3 text-base font-bold text-foreground">Данные магазина</h2>
+        <div className="overflow-hidden rounded-3xl border border-border bg-card">
           <Row label="Название" value={seller.shopName} />
           <Row label="Телефон" value={seller.phone} />
           <Row label="Описание" value={seller.description || '—'} />
@@ -128,10 +130,10 @@ export default function SellerProfilePage() {
 
 function StatCard({ icon: Icon, label, value }: { icon: any; label: string; value: React.ReactNode }) {
   return (
-    <div className="rounded-[28px] border border-border bg-card p-5 shadow-card">
+    <div className="rounded-2xl border border-border bg-card p-4">
       <Icon className="h-5 w-5 text-primary" />
-      <p className="mt-2 text-xs text-muted-foreground">{label}</p>
-      <p className="mt-1 text-xl font-semibold text-foreground">{value}</p>
+      <p className="mt-2 text-[11px] text-muted-foreground">{label}</p>
+      <p className="mt-1 text-xl font-bold text-foreground">{value}</p>
     </div>
   );
 }

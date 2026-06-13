@@ -84,17 +84,17 @@ export default function AdminOrdersPage() {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="fade-up space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold text-foreground">Заказы и заявки</h1>
-        <p className="mt-2 text-muted-foreground">Меняйте статусы заказов магазина и ремонтных заявок.</p>
+        <h1 className="text-2xl font-bold text-foreground">Заказы и заявки</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Меняйте статусы заказов магазина и ремонтных заявок.</p>
       </div>
 
       <section>
-        <h2 className="mb-4 text-xl font-semibold text-foreground">Заказы магазина ({orders.length})</h2>
+        <h2 className="mb-3 text-base font-bold text-foreground">Заказы магазина ({orders.length})</h2>
         <div className="space-y-3">
           {orders.map((o) => (
-            <div key={o.id} className="rounded-[28px] border border-border bg-card p-5 shadow-card">
+            <div key={o.id} className="fade-up rounded-3xl border border-border bg-card p-5">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="font-semibold text-foreground">Заказ #{o.id.slice(0, 8)} · {o.totalAmount} сом</p>
@@ -110,10 +110,10 @@ export default function AdminOrdersPage() {
       </section>
 
       <section>
-        <h2 className="mb-4 text-xl font-semibold text-foreground">Ремонтные заявки ({bookings.length})</h2>
+        <h2 className="mb-3 text-base font-bold text-foreground">Ремонтные заявки ({bookings.length})</h2>
         <div className="space-y-3">
           {bookings.map((b) => (
-            <div key={b.id} className="rounded-[28px] border border-border bg-card p-5 shadow-card">
+            <div key={b.id} className="fade-up rounded-3xl border border-border bg-card p-5">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="font-semibold text-foreground">{b.service.title} · {b.estimatedPrice} сом</p>

@@ -130,19 +130,19 @@ export default function SellerProductsPage() {
   });
 
   return (
-    <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold text-foreground">Мои товары</h1>
-          <p className="mt-2 text-muted-foreground">Добавление, изменение и удаление ваших товаров в магазине.</p>
+    <div className="fade-up">
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold text-foreground">Мои товары</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Добавление, изменение и удаление товаров.</p>
         </div>
-        <button onClick={openCreate} className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+        <button onClick={openCreate} className="inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
           <Plus className="h-4 w-4" /> Добавить
         </button>
       </div>
 
       {form ? (
-        <div className="mb-6 rounded-[28px] border border-border bg-card p-6 shadow-card">
+        <div className="mb-5 rounded-3xl border border-border bg-card p-5 fade-up">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-semibold text-foreground">{editingId ? 'Редактирование товара' : 'Новый товар'}</h2>
             <button onClick={() => setForm(null)} className="rounded-full p-2 text-muted-foreground hover:bg-secondary"><X className="h-5 w-5" /></button>
@@ -173,44 +173,30 @@ export default function SellerProductsPage() {
         </div>
       ) : null}
 
-      <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-card">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-secondary text-muted-foreground">
-            <tr>
-              <th className="px-5 py-3 font-medium">Товар</th>
-              <th className="px-5 py-3 font-medium">Цена</th>
-              <th className="px-5 py-3 font-medium">Остаток</th>
-              <th className="px-5 py-3 text-right font-medium">Действия</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {products.map((p) => (
-              <tr key={p.id}>
-                <td className="px-5 py-3">
-                  <div className="flex items-center gap-3">
-                    <img src={p.imageUrl} alt={p.title} className="h-12 w-12 rounded-xl object-cover" />
-                    <div>
-                      <p className="font-medium text-foreground">{p.title}</p>
-                      <p className="text-xs text-muted-foreground">{p.brand}</p>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-5 py-3 text-muted-foreground">{p.price} сом</td>
-                <td className="px-5 py-3 text-muted-foreground">{p.stock}</td>
-                <td className="px-5 py-3">
-                  <div className="flex justify-end gap-2">
-                    <button onClick={() => openEdit(p)} className="rounded-full border border-border p-2 text-muted-foreground hover:bg-secondary"><Pencil className="h-4 w-4" /></button>
-                    <button onClick={() => remove(p.id)} className="rounded-full border border-border p-2 text-red-600 hover:bg-red-50"><Trash2 className="h-4 w-4" /></button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {products.length === 0 ? (
-              <tr><td colSpan={4} className="px-5 py-8 text-center text-muted-foreground">У вас пока нет товаров</td></tr>
-            ) : null}
-          </tbody>
-        </table>
-      </div>
+      {products.length === 0 ? (
+        <div className="rounded-3xl border border-dashed border-border bg-card/40 p-10 text-center text-sm text-muted-foreground">
+          У вас пока нет товаров
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {products.map((p) => (
+            <div key={p.id} className="fade-up flex items-center gap-3 rounded-3xl border border-border bg-card p-4">
+              <img src={p.imageUrl} alt={p.title} className="h-14 w-14 shrink-0 rounded-2xl object-cover" />
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-semibold text-foreground">{p.title}</p>
+                <p className="text-xs text-muted-foreground">{p.brand}</p>
+                <p className="mt-0.5 text-sm font-bold text-primary">
+                  {p.price} сом <span className="font-normal text-muted-foreground">· остаток {p.stock}</span>
+                </p>
+              </div>
+              <div className="flex shrink-0 gap-2">
+                <button onClick={() => openEdit(p)} className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground transition hover:bg-secondary hover:text-foreground"><Pencil className="h-4 w-4" /></button>
+                <button onClick={() => remove(p.id)} className="grid h-9 w-9 place-items-center rounded-full border border-border text-destructive transition hover:bg-destructive/10"><Trash2 className="h-4 w-4" /></button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

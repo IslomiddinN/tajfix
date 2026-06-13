@@ -38,9 +38,9 @@ export default function AdminProfilePage() {
   const initials = profile.name.trim().slice(0, 1).toUpperCase() || 'A';
 
   return (
-    <div>
+    <div className="fade-up">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-semibold text-foreground">Профиль</h1>
+        <h1 className="text-2xl font-bold text-foreground">Профиль</h1>
         <button
           onClick={() => setEditOpen(true)}
           className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary/25"
@@ -49,7 +49,7 @@ export default function AdminProfilePage() {
         </button>
       </div>
 
-      <div className="flex items-center gap-4 rounded-[28px] border border-border bg-card p-6 shadow-card">
+      <div className="flex items-center gap-4 rounded-3xl border border-border bg-card p-6">
         <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-primary to-blue-700 text-2xl font-bold text-primary-foreground">
           {initials}
         </div>
@@ -61,7 +61,7 @@ export default function AdminProfilePage() {
         </div>
       </div>
 
-      <section className="mt-4 overflow-hidden rounded-[28px] border border-border bg-card shadow-card">
+      <section className="mt-4 overflow-hidden rounded-3xl border border-border bg-card">
         <Row label="Email" value={profile.email} />
         <Row label="Телефон" value={profile.phone} />
         <Row label="В системе с" value={fmtDate(profile.createdAt)} />
@@ -69,7 +69,7 @@ export default function AdminProfilePage() {
 
       <button
         onClick={() => setPwdOpen(true)}
-        className="mt-4 flex w-full items-center justify-between gap-4 rounded-[28px] border border-border bg-card p-5 shadow-card transition hover:border-primary"
+        className="mt-4 flex w-full items-center justify-between gap-4 rounded-3xl border border-border bg-card p-5 transition hover:border-primary"
       >
         <span className="flex items-center gap-3 font-semibold text-foreground">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary">

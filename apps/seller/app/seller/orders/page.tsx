@@ -71,10 +71,10 @@ export default function SellerOrdersPage() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-3xl font-semibold text-foreground">Продажи</h1>
-        <p className="mt-2 text-muted-foreground">
+    <div className="fade-up">
+      <div className="mb-5">
+        <h1 className="text-2xl font-bold text-foreground">Продажи</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Заказы с вашими товарами. Статус заказа меняет администратор — вы отмечаете готовность позиции к отгрузке.
         </p>
       </div>
@@ -82,9 +82,9 @@ export default function SellerOrdersPage() {
       {groups.length === 0 ? (
         <EmptyState title="Продаж пока нет" description="Как только клиенты купят ваши товары, заказы появятся здесь." />
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {groups.map((group) => (
-            <div key={group.order.id} className="overflow-hidden rounded-[28px] border border-border bg-card shadow-card">
+            <div key={group.order.id} className="fade-up overflow-hidden rounded-3xl border border-border bg-card">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-4">
                 <div>
                   <p className="font-medium text-foreground">Заказ #{group.order.id.slice(-6).toUpperCase()}</p>

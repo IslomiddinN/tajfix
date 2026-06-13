@@ -57,19 +57,19 @@ export default function SellerFinancePage() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-3xl font-semibold text-foreground">Финансы</h1>
-        <p className="mt-2 text-muted-foreground">Доход по завершённым заказам с вашими товарами.</p>
-      </div>
+    <div className="fade-up">
+      <h1 className="text-2xl font-bold text-foreground">Финансы</h1>
+      <p className="mt-1 text-sm text-muted-foreground">Доход по завершённым заказам с вашими товарами.</p>
 
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className="no-scrollbar mt-4 flex gap-2 overflow-x-auto">
         {PERIODS.map((p) => (
           <button
             key={p.key}
             onClick={() => setPeriod(p.key)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-              period === p.key ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-secondary'
+            className={`whitespace-nowrap rounded-full border px-4 py-1.5 text-sm font-medium transition ${
+              period === p.key
+                ? 'border-primary bg-primary text-primary-foreground'
+                : 'border-border bg-card text-muted-foreground hover:bg-secondary'
             }`}
           >
             {p.label}
@@ -77,31 +77,43 @@ export default function SellerFinancePage() {
         ))}
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-          <p className="text-sm text-muted-foreground">Выручка</p>
-          <p className="mt-2 text-3xl font-semibold text-foreground">{fmtMoney(finance.gross)}</p>
-        </div>
-        <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-          <p className="text-sm text-muted-foreground">Комиссия ({Math.round(FEE_RATE * 100)}%)</p>
-          <p className="mt-2 text-3xl font-semibold text-destructive">−{fmtMoney(finance.fee)}</p>
-        </div>
-        <div className="rounded-[32px] border border-green-500/30 bg-green-500/5 p-6 shadow-card">
-          <p className="text-sm text-muted-foreground">К выплате</p>
-          <p className="mt-2 text-3xl font-semibold text-green-500">{fmtMoney(finance.net)}</p>
-        </div>
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        <Money label="Выручка" value={fmtMoney(finance.gross)} />
+        <Money label={`Комиссия ${Math.round(FEE_RATE * 100)}%`} value={`−${fmtMoney(finance.fee)}`} />
+        <Money label="К выплате" value={fmtMoney(finance.net)} accent />
+        <Money label="Заказов" value={String(finance.ordersCount)} />
       </div>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-          <p className="text-sm text-muted-foreground">Завершённых заказов</p>
-          <p className="mt-2 text-2xl font-semibold text-foreground">{finance.ordersCount}</p>
+      <section className="mt-6">
+        <h2 className="mb-3 text-base font-bold text-foreground">Итоги периода</h2>
+        <div className="overflow-hidden rounded-2xl border border-border bg-card">
+          <Row label="Завершённых заказов" value={String(finance.ordersCount)} />
+          <Row label="Продано единиц" value={String(finance.soldUnits)} />
+          <Row label="Комиссия платформы" value={`${Math.round(FEE_RATE * 100)}%`} />
         </div>
-        <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-          <p className="text-sm text-muted-foreground">Продано единиц</p>
-          <p className="mt-2 text-2xl font-semibold text-foreground">{finance.soldUnits}</p>
-        </div>
-      </div>
+      </section>
+    </div>
+  );
+}
+
+function Money({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
+  return (
+    <div
+      className={`rounded-2xl p-4 ${
+        accent ? 'bg-gradient-to-br from-primary to-blue-700 text-primary-foreground' : 'border border-border bg-card'
+      }`}
+    >
+      <p className={`text-[11px] ${accent ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{label}</p>
+      <p className="mt-1 text-lg font-bold">{value}</p>
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between border-b border-border/60 px-4 py-3 text-sm last:border-0">
+      <span className="text-muted-foreground">{label}</span>
+      <span className="font-semibold text-foreground">{value}</span>
     </div>
   );
 }

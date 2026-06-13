@@ -95,10 +95,10 @@ export default function AdminSupportPage() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-3xl font-semibold text-foreground">Поддержка</h1>
-        <p className="mt-2 text-muted-foreground">Диалоги с клиентами — отвечайте на вопросы.</p>
+    <div className="fade-up">
+      <div className="mb-5">
+        <h1 className="text-2xl font-bold text-foreground">Поддержка</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Диалоги с клиентами — отвечайте на вопросы.</p>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[320px_1fr]">
@@ -137,11 +137,11 @@ export default function AdminSupportPage() {
         {/* Переписка */}
         <div className={`${activeId ? '' : 'hidden lg:block'}`}>
           {!detail ? (
-            <div className="grid h-[60vh] place-items-center rounded-[28px] border border-border bg-card text-sm text-muted-foreground">
+            <div className="grid h-[60vh] place-items-center rounded-3xl border border-border bg-card text-sm text-muted-foreground">
               Выберите диалог слева
             </div>
           ) : (
-            <div className="flex h-[70vh] flex-col overflow-hidden rounded-[28px] border border-border bg-card">
+            <div className="flex h-[70vh] flex-col overflow-hidden rounded-3xl border border-border bg-card">
               <div className="flex items-center gap-3 border-b border-border px-4 py-3">
                 <button
                   onClick={() => setActiveId(null)}

@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ClipboardList, Users, Wallet, Wrench } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 interface AdminStats {
@@ -9,6 +11,8 @@ interface AdminStats {
   totalBookings: number;
   totalRevenue: number;
 }
+
+const fmtMoney = (n: number) => `${Math.round(n).toLocaleString('ru-RU')} сом`;
 
 export default function AdminPage() {
   const [stats, setStats] = useState<AdminStats | null>(null);
@@ -24,35 +28,48 @@ export default function AdminPage() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-foreground">Админ-панель</h1>
-        <p className="mt-2 text-muted-foreground">Статистика сервиса и управление данными.</p>
+    <div className="fade-up">
+      <h1 className="text-2xl font-bold text-foreground">Админ-панель</h1>
+      <p className="mt-1 text-sm text-muted-foreground">Статистика сервиса и управление данными.</p>
+
+      <div className="mt-5 grid grid-cols-2 gap-3 xl:grid-cols-4">
+        <Stat icon={Wallet} label="Выручка" value={fmtMoney(stats?.totalRevenue ?? 0)} accent />
+        <Stat icon={Users} label="Пользователи" value={stats?.totalUsers ?? 0} />
+        <Stat icon={ClipboardList} label="Заказы" value={stats?.totalOrders ?? 0} />
+        <Stat icon={Wrench} label="Бронирования" value={stats?.totalBookings ?? 0} />
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-          <p className="text-sm text-muted-foreground">Пользователи</p>
-          <p className="mt-3 text-3xl font-semibold text-foreground">{stats?.totalUsers ?? 0}</p>
-        </div>
-        <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-          <p className="text-sm text-muted-foreground">Заказы</p>
-          <p className="mt-3 text-3xl font-semibold text-foreground">{stats?.totalOrders ?? 0}</p>
-        </div>
-        <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-          <p className="text-sm text-muted-foreground">Бронирования</p>
-          <p className="mt-3 text-3xl font-semibold text-foreground">{stats?.totalBookings ?? 0}</p>
-        </div>
-        <div className="rounded-[32px] border border-border bg-card p-6 shadow-card">
-          <p className="text-sm text-muted-foreground">Выручка</p>
-          <p className="mt-3 text-3xl font-semibold text-foreground">{stats?.totalRevenue ?? 0} сом</p>
-        </div>
-      </div>
-      <div className="mt-8 rounded-[32px] border border-border bg-card p-8 shadow-card">
-        <h2 className="text-2xl font-semibold text-foreground">Управление</h2>
-        <p className="mt-3 text-muted-foreground">
-          Используйте меню слева: добавляйте, изменяйте и удаляйте товары, услуги и мастеров, меняйте статусы заказов и заявок.
+
+      <div className="mt-5 rounded-3xl border border-border bg-card p-5">
+        <h2 className="text-base font-bold text-foreground">Управление</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Меню слева: добавляйте, изменяйте и удаляйте товары, услуги и мастеров, меняйте статусы заказов и заявок,
+          отвечайте в поддержке.
         </p>
       </div>
+    </div>
+  );
+}
+
+function Stat({
+  icon: Icon,
+  label,
+  value,
+  accent
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: React.ReactNode;
+  accent?: boolean;
+}) {
+  return (
+    <div
+      className={`rounded-2xl p-4 ${
+        accent ? 'bg-gradient-to-br from-primary to-blue-700 text-primary-foreground' : 'border border-border bg-card'
+      }`}
+    >
+      <Icon className={`h-5 w-5 ${accent ? 'text-primary-foreground/90' : 'text-primary'}`} />
+      <p className={`mt-2 text-2xl font-bold ${accent ? '' : 'text-foreground'}`}>{value}</p>
+      <p className={`mt-0.5 text-[11px] ${accent ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{label}</p>
     </div>
   );
 }
