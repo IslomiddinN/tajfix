@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
-import { LogIn, LogOut, ShoppingCart, Store, User, Wrench, LayoutDashboard } from 'lucide-react';
+import { LogIn, LogOut, ShoppingCart, Store, User, Wrench, LayoutDashboard, ClipboardList } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { NotificationBell } from './NotificationBell';
 import { appHref } from '@/lib/appUrls';
@@ -100,11 +100,11 @@ export function Header() {
               ) : null}
               {isPlainUser ? (
                 <Link
-                  href={appHref('seller', '/register')}
+                  href={appHref('client', '/orders')}
                   className="hidden items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground sm:inline-flex"
                 >
-                  <Store className="h-4 w-4" /> Стать продавцом
-                </Link>
+                  <ClipboardList className="h-4 w-4" />
+                </Link> 
               ) : null}
               <Link
                 href="/profile"

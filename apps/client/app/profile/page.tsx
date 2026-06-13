@@ -190,7 +190,7 @@ export default function ProfilePage() {
           <CabinetLink href={appHref('admin', '/admin')} icon={LayoutDashboard} title="Админ-панель" subtitle="Товары, услуги, заказы, поддержка" />
         ) : null}
         {role === 'USER' ? (
-          <CabinetLink href={appHref('seller', '/register')} icon={Store} title="Стать продавцом" subtitle="Откройте свой магазин на TajFix" />
+          <CabinetLink href={appHref('client', '/orders')} icon={ClipboardList} title="Мои заказы" subtitle="История заказов, статусы и повторить покупку" />
         ) : null}
 
         <CabinetLink href="/support" icon={Headset} title="Поддержка" subtitle="Напишите нам — поможем с заказом, ремонтом или товаром" />

@@ -1,6 +1,4 @@
-// Loads the repo-root .env into process.env for every app in the monorepo,
-// so DB credentials and secrets live in ONE place instead of being copied
-// into each app. Each app's next.config.mjs calls loadRootEnv() at the top.
+  
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';

@@ -17,6 +17,7 @@
     "build:seller": "npm run build -w @tajfix/seller",
     "build:admin": "npm run build -w @tajfix/admin",
     "lint": "npm run lint -w @tajfix/client",
+    "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
