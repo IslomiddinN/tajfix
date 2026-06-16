@@ -59,7 +59,7 @@ export function Footer() {
           <p className="text-sm font-semibold text-foreground">Контакты</p>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li><a href="tel:+992000000000" className="hover:text-foreground">+992 000 00 00 00</a></li>
-            <li><a href="mailto:hello@tajfix.tj" className="hover:text-foreground">hello@tajfix.tj</a></li>
+            <li><a href="mailto:hello@tajfix.pro" className="hover:text-foreground">hello@tajfix.pro</a></li>
             <li>г. Душанбе, пр. Рудаки, 25</li>
           </ul>
         </div>

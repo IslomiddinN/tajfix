@@ -32,7 +32,7 @@ export default function ContactsPage() {
           <Mail className="h-6 w-6 text-brand" />
           <div>
             <p className="font-semibold text-foreground">Email</p>
-            <a href="mailto:hello@tajfix.tj" className="mt-1 block text-muted-foreground hover:text-foreground">hello@tajfix.tj</a>
+            <a href="mailto:hello@tajfix.pro" className="mt-1 block text-muted-foreground hover:text-foreground">hello@tajfix.pro</a>
           </div>
         </div>
         <div className="flex items-start gap-4 rounded-[28px] border border-border bg-card p-5 shadow-card sm:p-6">
